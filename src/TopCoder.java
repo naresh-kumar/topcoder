@@ -11,10 +11,7 @@ public class TopCoder
         reader = fromFile ? new Reader("in") : new Reader(System.in);
         writer = new Writer(System.out, fromFile);
 
-
-
         reader.close();
         writer.finish();
     }
-
 }
