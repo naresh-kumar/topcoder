@@ -1,8 +1,9 @@
 public class AvlTree
 {
     private Node root;
+    private int counter;
 
-    void add(Node node)
+    public void add(Node node)
     {
         if (root == null)
         {
@@ -14,8 +15,9 @@ public class AvlTree
         }
     }
 
-    void insert(Node curr, Node node)
+    private void insert(Node curr, Node node)
     {
+        curr.size++;
         if (node.data < curr.data)
         {
             if (curr.left == null)
@@ -30,7 +32,6 @@ public class AvlTree
         }
         else
         {
-
             if (curr.right == null)
             {
                 curr.right = node;
@@ -134,13 +135,68 @@ public class AvlTree
         return node == null ? 0 : height(node.left) - height(node.right);
     }
 
-    void print(Node node, Writer writer)
+    private void print(Node node, Writer writer)
     {
         if (node != null)
         {
             print(node.left, writer);
-            writer.print(node.data + "[" + node.height + "] ");
+            writer.println("[" + counter + "] " + node);
+            counter += 1;
             print(node.right, writer);
         }
+    }
+
+    public void print(Writer writer)
+    {
+        counter = 0;
+        print(root, writer);
+        writer.println();
+    }
+
+    public Node find(int i)
+    {
+        counter = 0;
+        return find(this.root, i);
+    }
+
+    public Node findR(int i)
+    {
+        counter = 0;
+        return findR(this.root, i);
+    }
+
+
+    private Node find(Node node, int i)
+    {
+        Node res = null;
+        if (node != null)
+        {
+            res = find(node.left, i);
+            if (res == null)
+            {
+                if (counter == i) res = node;
+                counter += 1;
+            }
+            if (res == null)
+                res = find(node.right, i);
+        }
+        return res;
+    }
+
+    private Node findR(Node node, int i)
+    {
+        Node res = null;
+        if (node != null)
+        {
+            res = findR(node.right, i);
+            if (res == null)
+            {
+                if (counter == i) res = node;
+                counter += 1;
+            }
+            if (res == null)
+                res = findR(node.left, i);
+        }
+        return res;
     }
 }

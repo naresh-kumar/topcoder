@@ -1,8 +1,17 @@
-import java.util.Collection;
 import java.util.Random;
 
 public class Utils
 {
+    private static final String PP = "pp";
+    private static final String TILDE_PP = "~pp";
+    private static final String TILDE_MC = "~mc";
+    private static final char TILDE = '~';
+    private static final char SLASH = '/';
+    private static final char AT = '@';
+    private static final char HYPHEN = '-';
+    public static final char SEMI_COLON = ';';
+    private static final char COMMA = ',';
+
     private static Random random = new Random();
 
     private Utils()
@@ -66,4 +75,40 @@ public class Utils
         }
         return a;
     }
+
+    public static boolean match(String pattern, String filename)
+    {
+        int pLen = pattern.length();
+        int fLen = filename.length();
+
+        int i = 0;
+        int j = 0;
+        while (i < pLen)
+        {
+            char c = pattern.charAt(i);
+            if (i + 1 < pLen && pattern.charAt(i + 1) == '*')
+            {
+                while (j < fLen && filename.charAt(j) == c) ++j;
+
+                i += 2;
+            }
+            else if (j < fLen && c == '?')
+            {
+                ++i;
+                ++j;
+            }
+            else if (j < fLen && c == filename.charAt(j))
+            {
+                ++i;
+                ++j;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        return i == pLen && j == fLen;
+    }
 }
+
