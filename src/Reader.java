@@ -48,4 +48,9 @@ public class Reader extends BufferedReader
         }
         return tokenizer.nextToken();
     }
+
+    public String nextLine() throws IOException
+    {
+        return readLine();
+    }
 }

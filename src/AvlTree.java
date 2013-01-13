@@ -199,4 +199,9 @@ public class AvlTree
         }
         return res;
     }
+
+    public Node getRoot()
+    {
+        return root;
+    }
 }

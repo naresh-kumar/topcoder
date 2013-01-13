@@ -349,27 +349,28 @@ public final class Phonenumber
         @Override
         public String toString()
         {
-            StringBuilder outputString = new StringBuilder();
-            outputString.append("Country Code: ").append(countryCode_);
-            outputString.append(" National Number: ").append(nationalNumber_);
-            if (hasItalianLeadingZero() && isItalianLeadingZero())
-            {
-                outputString.append(" Leading Zero: true");
-            }
-            if (hasExtension())
-            {
-                outputString.append(" Extension: ").append(extension_);
-            }
-            if (hasCountryCodeSource())
-            {
-                outputString.append(" Country Code Source: ").append(countryCodeSource_);
-            }
-            if (hasPreferredDomesticCarrierCode())
-            {
-                outputString.append(" Preferred Domestic Carrier Code: ").
-                        append(preferredDomesticCarrierCode_);
-            }
-            return outputString.toString();
+            return "+" + countryCode_ + "-" + nationalNumber_;
+//            StringBuilder outputString = new StringBuilder();
+//            outputString.append("Country Code: ").append(countryCode_);
+//            outputString.append(" National Number: ").append(nationalNumber_);
+//            if (hasItalianLeadingZero() && isItalianLeadingZero())
+//            {
+//                outputString.append(" Leading Zero: true");
+//            }
+//            if (hasExtension())
+//            {
+//                outputString.append(" Extension: ").append(extension_);
+//            }
+//            if (hasCountryCodeSource())
+//            {
+//                outputString.append(" Country Code Source: ").append(countryCodeSource_);
+//            }
+//            if (hasPreferredDomesticCarrierCode())
+//            {
+//                outputString.append(" Preferred Domestic Carrier Code: ").
+//                        append(preferredDomesticCarrierCode_);
+//            }
+//            return outputString.toString();
         }
     }
 }

@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Random;
 
 public class Utils
@@ -17,6 +18,33 @@ public class Utils
     private Utils()
     {
         // do nothing
+    }
+
+    public static double root(int n)
+    {
+        long x = (long) n * 10000;
+        long low = 1;
+        long high = x;
+        while (low < high)
+        {
+            long mid = (low + high) / 2;
+
+            long value = mid * mid;
+            if (value == x)
+            {
+                low = mid;
+                break;
+            }
+            else if (value < x)
+            {
+                low = mid + 1;
+            }
+            else
+            {
+                high = mid - 1;
+            }
+        }
+        return (double) low / 100;
     }
 
     public static int getRandomInt(int limit)
@@ -109,6 +137,51 @@ public class Utils
         }
 
         return i == pLen && j == fLen;
+    }
+
+    static int binarySearchOnRotatedList(List<Integer> list, int key)
+    {
+        int low = 0;
+        int high = list.size() - 1;
+        while (low <= high)
+        {
+            int mid = (low + high) / 2;
+            int midValue = list.get(mid);
+            int lowValue = list.get(low);
+            int highValue = list.get(high);
+
+            if (midValue == key)
+            {
+                return mid;
+            }
+            else
+            {
+                if (lowValue < midValue)
+                {
+                    if (key < midValue && key >= lowValue)
+                    {
+                        high = mid - 1;
+                    }
+                    else
+                    {
+                        low = mid + 1;
+                    }
+                }
+                else
+                {
+                    if (key > midValue && key <= highValue)
+                    {
+                        low = mid + 1;
+                    }
+                    else
+                    {
+                        high = mid - 1;
+                    }
+                }
+
+            }
+        }
+        return -1;
     }
 }
 

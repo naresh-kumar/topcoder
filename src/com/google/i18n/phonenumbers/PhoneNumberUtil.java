@@ -332,8 +332,12 @@ public class PhoneNumberUtil
 
     // We append optionally the extension pattern to the end here, as a valid phone number may
     // have an extension prefix appended, followed by 1 or more digits.
+    //    private static final Pattern VALID_PHONE_NUMBER_PATTERN =
+    //            Pattern.compile(VALID_PHONE_NUMBER + "(?:" + EXTN_PATTERNS_FOR_PARSING + ")?", REGEX_FLAGS);
+
     private static final Pattern VALID_PHONE_NUMBER_PATTERN =
-            Pattern.compile(VALID_PHONE_NUMBER + "(?:" + EXTN_PATTERNS_FOR_PARSING + ")?", REGEX_FLAGS);
+            Pattern.compile(DIGITS + "{" + MIN_LENGTH_FOR_NSN + "}" +
+                    "|" + "[" + PLUS_CHARS + "]*+(?:[" + "-" + "]*" + DIGITS + "){3,}[" + "-" + DIGITS + "]*");
 
     static final Pattern NON_DIGITS_PATTERN = Pattern.compile("(\\D+)");
 
@@ -690,31 +694,47 @@ public class PhoneNumberUtil
      *         string if no character used to start phone numbers (such as + or any digit) is
      *         found in the number
      */
+
     static String extractPossibleNumber(String number)
     {
-        Matcher m = VALID_START_CHAR_PATTERN.matcher(number);
-        if (m.find())
+        char[] array = new char[number.length()];
+
+        int len = 0;
+        for (int i = 0; i < number.length(); ++i)
         {
-            number = number.substring(m.start());
-            // Remove trailing non-alpha non-numerical characters.
-            Matcher trailingCharsMatcher = UNWANTED_END_CHAR_PATTERN.matcher(number);
-            if (trailingCharsMatcher.find())
+            char c = number.charAt(i);
+            if (c == '+' || c == '-' || (c >= '0' && c <= '9'))
             {
-                number = number.substring(0, trailingCharsMatcher.start());
-                LOGGER.log(Level.FINER, "Stripped trailing characters: " + number);
+                array[len] = c;
+                len++;
             }
-            // Check for extra numbers at the end.
-            Matcher secondNumber = SECOND_NUMBER_START_PATTERN.matcher(number);
-            if (secondNumber.find())
-            {
-                number = number.substring(0, secondNumber.start());
-            }
-            return number;
         }
-        else
-        {
-            return "";
-        }
+
+        return len == number.length() ? number : new String(array, 0, len);
+
+        //        Matcher m = VALID_START_CHAR_PATTERN.matcher(number);
+        //        if (m.find())
+        //        {
+        //            number = number.substring(m.start());
+        //            // Remove trailing non-alpha non-numerical characters.
+        //            Matcher trailingCharsMatcher = UNWANTED_END_CHAR_PATTERN.matcher(number);
+        //            if (trailingCharsMatcher.find())
+        //            {
+        //                number = number.substring(0, trailingCharsMatcher.start());
+        //                LOGGER.log(Level.FINER, "Stripped trailing characters: " + number);
+        //            }
+        //            // Check for extra numbers at the end.
+        //            Matcher secondNumber = SECOND_NUMBER_START_PATTERN.matcher(number);
+        //            if (secondNumber.find())
+        //            {
+        //                number = number.substring(0, secondNumber.start());
+        //            }
+        //            return number;
+        //        }
+        //        else
+        //        {
+        //            return "";
+        //        }
     }
 
     /**
@@ -2700,10 +2720,10 @@ public class PhoneNumberUtil
 
         CountryCodeSource countryCodeSource =
                 maybeStripInternationalPrefixAndNormalize(fullNumber, possibleCountryIddPrefix);
-        if (keepRawInput)
-        {
-            phoneNumber.setCountryCodeSource(countryCodeSource);
-        }
+//        if (keepRawInput)
+//        {
+//            phoneNumber.setCountryCodeSource(countryCodeSource);
+//        }
         if (countryCodeSource != CountryCodeSource.FROM_DEFAULT_COUNTRY)
         {
             if (fullNumber.length() <= MIN_LENGTH_FOR_NSN)
@@ -3108,17 +3128,17 @@ public class PhoneNumberUtil
                     "Missing or invalid default region.");
         }
 
-        if (keepRawInput)
-        {
-            phoneNumber.setRawInput(numberToParse);
-        }
+//        if (keepRawInput)
+//        {
+//            phoneNumber.setRawInput(numberToParse);
+//        }
         // Attempt to parse extension first, since it doesn't require region-specific data and we want
         // to have the non-normalised number here.
-        String extension = maybeStripExtension(nationalNumber);
-        if (extension.length() > 0)
-        {
-            phoneNumber.setExtension(extension);
-        }
+//        String extension = maybeStripExtension(nationalNumber);
+//        if (extension.length() > 0)
+//        {
+//            phoneNumber.setExtension(extension);
+//        }
 
         PhoneMetadata regionMetadata = getMetadataForRegion(defaultRegion);
         // Check to see if the number is given in international format so we know whether this number is
@@ -3217,34 +3237,34 @@ public class PhoneNumberUtil
      */
     private void buildNationalNumberForParsing(String numberToParse, StringBuilder nationalNumber)
     {
-        int indexOfPhoneContext = numberToParse.indexOf(RFC3966_PHONE_CONTEXT);
-        if (indexOfPhoneContext > 0)
-        {
-            int phoneContextStart = indexOfPhoneContext + RFC3966_PHONE_CONTEXT.length();
-            // If the phone context contains a phone number prefix, we need to capture it, whereas domains
-            // will be ignored.
-            if (numberToParse.charAt(phoneContextStart) == PLUS_SIGN)
-            {
-                // Additional parameters might follow the phone context. If so, we will remove them here
-                // because the parameters after phone context are not important for parsing the
-                // phone number.
-                int phoneContextEnd = numberToParse.indexOf(';', phoneContextStart);
-                if (phoneContextEnd > 0)
-                {
-                    nationalNumber.append(numberToParse.substring(phoneContextStart, phoneContextEnd));
-                }
-                else
-                {
-                    nationalNumber.append(numberToParse.substring(phoneContextStart));
-                }
-            }
-
-            // Now append everything between the "tel:" prefix and the phone-context. This should include
-            // the national number, an optional extension or isdn-subaddress component.
-            nationalNumber.append(numberToParse.substring(
-                    numberToParse.indexOf(RFC3966_PREFIX) + RFC3966_PREFIX.length(), indexOfPhoneContext));
-        }
-        else
+        //        int indexOfPhoneContext = numberToParse.indexOf(RFC3966_PHONE_CONTEXT);
+        //        if (indexOfPhoneContext > 0)
+        //        {
+        //            int phoneContextStart = indexOfPhoneContext + RFC3966_PHONE_CONTEXT.length();
+        //            // If the phone context contains a phone number prefix, we need to capture it, whereas domains
+        //            // will be ignored.
+        //            if (numberToParse.charAt(phoneContextStart) == PLUS_SIGN)
+        //            {
+        //                // Additional parameters might follow the phone context. If so, we will remove them here
+        //                // because the parameters after phone context are not important for parsing the
+        //                // phone number.
+        //                int phoneContextEnd = numberToParse.indexOf(';', phoneContextStart);
+        //                if (phoneContextEnd > 0)
+        //                {
+        //                    nationalNumber.append(numberToParse.substring(phoneContextStart, phoneContextEnd));
+        //                }
+        //                else
+        //                {
+        //                    nationalNumber.append(numberToParse.substring(phoneContextStart));
+        //                }
+        //            }
+        //
+        //            // Now append everything between the "tel:" prefix and the phone-context. This should include
+        //            // the national number, an optional extension or isdn-subaddress component.
+        //            nationalNumber.append(numberToParse.substring(
+        //                    numberToParse.indexOf(RFC3966_PREFIX) + RFC3966_PREFIX.length(), indexOfPhoneContext));
+        //        }
+        //        else
         {
             // Extract a possible number from the string passed in (this strips leading characters that
             // could not be the start of a phone number.)
@@ -3253,11 +3273,11 @@ public class PhoneNumberUtil
 
         // Delete the isdn-subaddress and everything after it if it is present. Note extension won't
         // appear at the same time with isdn-subaddress according to paragraph 5.3 of the RFC3966 spec,
-        int indexOfIsdn = nationalNumber.indexOf(RFC3966_ISDN_SUBADDRESS);
-        if (indexOfIsdn > 0)
-        {
-            nationalNumber.delete(indexOfIsdn, nationalNumber.length());
-        }
+        //        int indexOfIsdn = nationalNumber.indexOf(RFC3966_ISDN_SUBADDRESS);
+        //        if (indexOfIsdn > 0)
+        //        {
+        //            nationalNumber.delete(indexOfIsdn, nationalNumber.length());
+        //        }
         // If both phone context and isdn-subaddress are absent but other parameters are present, the
         // parameters are left in nationalNumber. This is because we are concerned about deleting
         // content from a potential number string when there is no strong evidence that the number is
