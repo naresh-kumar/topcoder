@@ -139,6 +139,71 @@ public class Utils
         return i == pLen && j == fLen;
     }
 
+    public static String mult(String a, String b)
+    {
+        int a_len = a.length();
+        int b_len = b.length();
+        int res_len = a_len + b_len;
+
+        char[] res = new char[res_len];
+
+        for (int i = 0; i < a_len; ++i)
+        {
+            for (int j = 0; j < res_len; ++j)
+            {
+                res[j] += '0';
+            }
+            System.out.println(res);
+            for (int j = 0; j < res_len; ++j)
+            {
+                res[j] -= '0';
+            }
+            char[] temp = new char[res_len];
+            int multiplier = a.charAt(a_len - i - 1) - '0';
+
+            int carry = 0;
+            for (int j = 0; j < b.length(); ++j)
+            {
+                int m = (b.charAt(b_len - j - 1) - '0') * multiplier + carry;
+                if (m > 9)
+                {
+                    carry = m / 10;
+                    m %= 10;
+                }
+                else
+                {
+                    carry = 0;
+                }
+
+                temp[res_len - j - 1 - i] = (char) m;
+            }
+            temp[a_len - 1 - i] = (char) carry;
+
+            carry = 0;
+            for (int j = i; j < res_len; ++j)
+            {
+                int m = res[res_len - j - 1] + temp[res_len - j - 1] + carry;
+                if (m > 9)
+                {
+                    carry = m / 10;
+                    m %= 10;
+                }
+                else
+                {
+                    carry = 0;
+                }
+                res[res_len - j - 1] = (char) (m);
+            }
+
+        }
+        for (int j = 0; j < res_len; ++j)
+        {
+            res[j] += '0';
+        }
+
+        return new String(res);
+    }
+
     static int binarySearchOnRotatedList(List<Integer> list, int key)
     {
         int low = 0;
