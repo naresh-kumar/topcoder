@@ -7,28 +7,20 @@ public class Solution
 {
     public static void main(String[] args) throws IOException
     {
-        Reader reader = new Reader("in");
+        Reader reader = new Reader(System.in);
         Writer writer = new Writer(System.out, false);
 
-        int[] array = new int[100];
-//        array[0] = 0;
-        array[1] = 1;
-//        array[2] = 0;
-        array[3] = 1;
-        array[4] = 1;
-        for (int i = 5; i < 100; ++i)
-        {
-            if (array[i - 1] * array[i - 3] * array[i - 4] == 0)
-            {
-                array[i] = 1;
-            }
-        }
-        writer.print(array);
+        hackerCup1(reader, writer);
 
         reader.close();
         writer.finish();
     }
 
+    private static void hackerCup1(Reader reader, Writer writer)
+    {
+
+
+    }
 
     public static class Reader extends BufferedReader
     {
@@ -116,6 +108,8 @@ public class Solution
                     print(' ');
                 print(array[i]);
             }
+
+            append("\n");
         }
 
         public <T> void print(Collection<T> collection)
