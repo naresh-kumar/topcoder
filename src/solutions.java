@@ -3,8 +3,7 @@ import java.util.Arrays;
 
 public class solutions
 {
-
-    private static void hackerCup3(Solution.Reader reader, Solution.Writer writer) throws IOException
+    private static void hackerCup3(Main.Reader reader, Main.Writer writer) throws IOException
     {
         int t = reader.nextInt();
         for (int testCase = 1; testCase <= t; ++testCase)
@@ -77,6 +76,31 @@ public class solutions
             if (i < 0) i += k + 1;
             writer.append("Case #" + testCase + ": " + seq[i] + "\n");
 
+        }
+    }
+
+    private static void feb13buy1get1(Main.Reader reader, Main.Writer writer) throws IOException
+    {
+        int t = reader.nextInt();
+        while (t-- > 0)
+        {
+            String s = reader.nextString();
+            boolean[] isFree = new boolean[128];
+            int cost = 0;
+            for (int i = 0; i < s.length(); ++i)
+            {
+                char c = s.charAt(i);
+                if (isFree[c])
+                {
+                    isFree[c] = false;
+                }
+                else
+                {
+                    isFree[c] = true;
+                    ++cost;
+                }
+            }
+            writer.append(cost + "\n");
         }
     }
 

@@ -3,24 +3,26 @@ import java.io.*;
 import java.util.Collection;
 import java.util.StringTokenizer;
 
-public class Solution
+public class Main
 {
     public static void main(String[] args) throws IOException
     {
         Reader reader = new Reader(System.in);
         Writer writer = new Writer(System.out, false);
-
-        hackerCup1(reader, writer);
+        //        Reader reader = new Reader("in.txt");
+        //        Writer writer = new Writer(new FileOutputStream("output"), false);
+        feb13ClimbingStairs(reader, writer);
 
         reader.close();
         writer.finish();
     }
 
-    private static void hackerCup1(Reader reader, Writer writer)
+    private static void feb13ClimbingStairs(Reader reader, Writer writer)
     {
 
 
     }
+
 
     public static class Reader extends BufferedReader
     {
