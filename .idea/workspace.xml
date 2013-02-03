@@ -89,7 +89,7 @@
     <file path="/SubscriptionStatus.java" changelist="fc2388c4-0a35-4df1-a8b5-f49bb2ead436" time="1359446497237" ignored="false" />
     <file path="$USER_HOME$/pwm_android/src/to/talk/jalebi/protocol/Listeners/RosterListener.java" changelist="fc2388c4-0a35-4df1-a8b5-f49bb2ead436" time="1359447328166" ignored="false" />
     <file path="/RosterListener.java" changelist="fc2388c4-0a35-4df1-a8b5-f49bb2ead436" time="1359447327718" ignored="false" />
-    <file path="/Main.java" changelist="fc2388c4-0a35-4df1-a8b5-f49bb2ead436" time="1359893748465" ignored="false" />
+    <file path="/Main.java" changelist="fc2388c4-0a35-4df1-a8b5-f49bb2ead436" time="1359893991761" ignored="false" />
     <file path="/FordFulkerson.java" changelist="fc2388c4-0a35-4df1-a8b5-f49bb2ead436" time="1359836489591" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -149,32 +149,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Main.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Main.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="75" selection-start="423" selection-end="423" vertical-scroll-proportion="0.0">
+            <state line="67" column="29" selection-start="1504" selection-end="1504" vertical-scroll-proportion="0.52587646">
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2452#2459#0" expanded="true" />
+                <element signature="e#2204#2211#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="in.txt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/in.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="0" selection-start="49" selection-end="49" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="output.txt" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/output.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="16" selection-start="16" selection-end="16" vertical-scroll-proportion="0.0">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -183,10 +164,7 @@
         <entry file="file://$PROJECT_DIR$/src/FordFulkerson.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="56" column="31" selection-start="1840" selection-end="1840" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2561#2570#0" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -195,9 +173,7 @@
         <entry file="file://$PROJECT_DIR$/src/FlowNetwork.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="26" column="48" selection-start="837" selection-end="837" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#1243#1253#0" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -206,10 +182,7 @@
         <entry file="file://$PROJECT_DIR$/src/Bag.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-                <element signature="imports" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -218,9 +191,7 @@
         <entry file="file://$PROJECT_DIR$/src/FlowEdge.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="34" column="26" selection-start="1193" selection-end="1193" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -229,9 +200,7 @@
         <entry file="file://$PROJECT_DIR$/src/solutions.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="246" column="22" selection-start="6718" selection-end="6718" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -260,8 +229,8 @@
         <option value="$PROJECT_DIR$/src/FlowEdge.java" />
         <option value="$PROJECT_DIR$/src/solutions.java" />
         <option value="$PROJECT_DIR$/in.txt" />
-        <option value="$PROJECT_DIR$/src/Main.java" />
         <option value="$PROJECT_DIR$/output.txt" />
+        <option value="$PROJECT_DIR$/src/Main.java" />
       </list>
     </option>
   </component>
@@ -298,7 +267,6 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -333,18 +301,19 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="OverrideImplement.combined" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
-    <property name="recentsLimit" value="5" />
+    <property name="OverrideImplement.combined" value="false" />
     <property name="MemberChooser.sorted" value="false" />
+    <property name="recentsLimit" value="5" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="dynamic.classpath" value="false" />
     <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RunManager" selected="Application.Main">
     <configuration default="false" name="Main" type="Application" factoryName="Application" temporary="true">
@@ -383,19 +352,6 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -421,6 +377,19 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -540,8 +509,8 @@
       <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24940805" sideWeight="0.344" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17284925" sideWeight="0.7152" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2848" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17284925" sideWeight="0.672" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2832" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
@@ -612,8 +581,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="22" column="32" selection-start="774" selection-end="774" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2452#2459#0" expanded="true" />
+            <element signature="e#2204#2211#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -668,71 +636,58 @@
     <entry file="file://$PROJECT_DIR$/src/Bag.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FlowNetwork.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="26" column="48" selection-start="837" selection-end="837" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#1243#1253#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FordFulkerson.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="56" column="31" selection-start="1840" selection-end="1840" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2561#2570#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FlowEdge.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="34" column="26" selection-start="1193" selection-end="1193" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/solutions.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="246" column="22" selection-start="6718" selection-end="6718" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/output.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="0" selection-start="50" selection-end="50" vertical-scroll-proportion="0.10663507">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/in.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="0" selection-start="49" selection-end="49" vertical-scroll-proportion="0.0">
+        <state line="3" column="0" selection-start="76" selection-end="76" vertical-scroll-proportion="0.10663507">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="75" selection-start="423" selection-end="423" vertical-scroll-proportion="0.0">
+        <state line="67" column="29" selection-start="1504" selection-end="1504" vertical-scroll-proportion="0.52587646">
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2452#2459#0" expanded="true" />
+            <element signature="e#2204#2211#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/output.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="16" selection-start="16" selection-end="16" vertical-scroll-proportion="0.0">
-          <folding />
         </state>
       </provider>
     </entry>

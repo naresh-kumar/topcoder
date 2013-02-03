@@ -9,27 +9,14 @@ public class Main
 
     public static void main(String[] args) throws IOException
     {
-        //                Reader reader = new Reader(System.in);
-        //                Writer writer = new Writer(System.out, false);
-        Reader reader = new Reader("in.txt");
-        Writer writer = new Writer(new FileOutputStream("output.txt"), true);
+        Reader reader = new Reader(System.in);
+        Writer writer = new Writer(System.out, false);
+        //        Reader reader = new Reader("in.txt");
+        //        Writer writer = new Writer(new FileOutputStream("output.txt"), false);
         hackerCupDeadPixels(reader, writer);
 
         reader.close();
         writer.finish();
-    }
-
-    private static class DPPoint
-    {
-        int left;
-        int up;
-        int order;
-
-        @Override
-        public String toString()
-        {
-            return "[" + left + " " + up + " " + order + "]";
-        }
     }
 
     private static class Pixel implements Comparable<Pixel>
@@ -132,7 +119,7 @@ public class Main
             int prev = inverse(curr);
             int currDeadIndex = 0;
             Pixel currDeadPixel = deadPixels.get(0);
-            //            writer.logTime();
+
             for (int i = 0; i < h; ++i)
             {
                 for (int j = 0; j < w; ++j)
