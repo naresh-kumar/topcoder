@@ -1,7 +1,6 @@
 
 import java.io.*;
-import java.util.Collection;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main
 {
@@ -10,10 +9,10 @@ public class Main
 
     public static void main(String[] args) throws IOException
     {
-        Reader reader = new Reader(System.in);
-        Writer writer = new Writer(System.out, false);
-        //        Reader reader = new Reader("in.txt");
-        //        Writer writer = new Writer(new FileOutputStream("output.txt"), false);
+        //                Reader reader = new Reader(System.in);
+        //                Writer writer = new Writer(System.out, false);
+        Reader reader = new Reader("in.txt");
+        Writer writer = new Writer(new FileOutputStream("output.txt"), true);
         hackerCupDeadPixels(reader, writer);
 
         reader.close();
@@ -30,6 +29,52 @@ public class Main
         public String toString()
         {
             return "[" + left + " " + up + " " + order + "]";
+        }
+    }
+
+    private static class Pixel implements Comparable<Pixel>
+    {
+        int x;
+        int y;
+
+        public Pixel(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+
+        @Override
+        public int compareTo(Pixel o)
+        {
+            return (x - o.x) != 0 ? (x - o.x) : y - o.y;
+        }
+
+        @Override
+        public String toString()
+        {
+            return "[" + x + "," + y + "]";
+        }
+
+        @Override
+        public boolean equals(Object o)
+        {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Pixel pixel = (Pixel) o;
+
+            if (x != pixel.x) return false;
+            if (y != pixel.y) return false;
+
+            return true;
+        }
+
+        @Override
+        public int hashCode()
+        {
+            int result = x;
+            result = 31 * result + y;
+            return result;
         }
     }
 
@@ -51,34 +96,31 @@ public class Main
             final int c = reader.nextInt();
             final int d = reader.nextInt();
 
-            int[][] monitor = new int[h][w];
+            List<Pixel> deadPixels = new ArrayList<Pixel>(n);
 
             int deadX = x;
             int deadY = y;
-
-            monitor[deadY][deadX] = 1;
+            //            writer.logTime();
+            deadPixels.add(new Pixel(deadY, deadX));
             for (int i = 1; i < n; ++i)
             {
                 int tempDeadX = deadX;
                 deadX = (deadX * a + deadY * b + 1) % w;
                 deadY = (tempDeadX * c + deadY * d + 1) % h;
-                monitor[deadY][deadX] = 1;
+                deadPixels.add(new Pixel(deadY, deadX));
             }
+            //            writer.logTime();
+
+            Collections.sort(deadPixels);
 
             if (debug)
             {
-
-                for (int i = 0; i < h; ++i)
-                {
-                    for (int j = 0; j < w; ++j)
-                    {
-                        writer.append(monitor[i][j] + "");
-                    }
-                    writer.append("\n");
-                }
+                writer.append(deadPixels.toString() + "\n");
             }
 
-            DPPoint[][] dp = new DPPoint[h][w];
+            int[][] dpUp = new int[2][w];
+            int[][] dpLeft = new int[2][w];
+            int[][] dpOrder = new int[2][w];
 
             int ans = 0;
 
@@ -86,43 +128,74 @@ public class Main
             int upDiff = q - min;
             int leftDiff = p - min;
 
+            int curr = 0;
+            int prev = inverse(curr);
+            int currDeadIndex = 0;
+            Pixel currDeadPixel = deadPixels.get(0);
+            //            writer.logTime();
             for (int i = 0; i < h; ++i)
             {
                 for (int j = 0; j < w; ++j)
                 {
-                    DPPoint dpPoint = new DPPoint();
-                    if (monitor[i][j] == 0)
+                    int up = 0;
+                    int left = 0;
+                    int order = 0;
+                    if (currDeadPixel == null || !pixelEquals(currDeadPixel, i, j))
                     {
-                        dpPoint.up = i > 0 ? dp[i - 1][j].up + 1 : 1;
-                        dpPoint.left = j > 0 ? dp[i][j - 1].left + 1 : 1;
+                        up = i > 0 ? dpUp[prev][j] + 1 : 1;
+                        left = j > 0 ? dpLeft[curr][j - 1] + 1 : 1;
                         int max_order = 1;
                         if (i > 0 && j > 0)
                         {
-                            max_order = Math.max(dp[i - 1][j - 1].order + 1, 1);
+                            max_order = Math.max(dpOrder[prev][j - 1] + 1, 1);
                         }
-                        int potential_order = Math.min(dpPoint.up - upDiff, dpPoint.left - leftDiff);
-                        dpPoint.order = Math.min(max_order, potential_order);
-                        dpPoint.order = Math.max(0, dpPoint.order);
+                        int potential_order = Math.min(up - upDiff, left - leftDiff);
+                        order = Math.min(max_order, potential_order);
                     }
-                    if (dpPoint.order >= min) ++ans;
-                    dp[i][j] = dpPoint;
+                    else if (currDeadPixel != null)
+                    {
+                        while (true)
+                        {
+                            ++currDeadIndex;
+                            if (currDeadIndex < deadPixels.size())
+                            {
+                                currDeadPixel = deadPixels.get(currDeadIndex);
+                                if (!pixelEquals(currDeadPixel, i, j))
+                                {
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                currDeadPixel = null;
+                                break;
+                            }
+                        }
+                    }
+                    if (order >= min) ++ans;
+                    dpUp[curr][j] = up;
+                    dpLeft[curr][j] = left;
+                    dpOrder[curr][j] = order;
                 }
+                prev = curr;
+                curr = inverse(curr);
                 if (debug)
                     writer.append("curr ans " + ans + "\n");
             }
-            if (debug)
-                for (int i = 0; i < h; ++i)
-                {
-                    for (int j = 0; j < w; ++j)
-                    {
-                        writer.append(dp[i][j].toString());
-                    }
-                    writer.append("\n");
-                }
 
             writer.append("Case #" + (testCases - t) + ": " + ans + "\n");
         }
 
+    }
+
+    private static boolean pixelEquals(Pixel currDeadPixel, int i, int j)
+    {
+        return currDeadPixel.x == i && currDeadPixel.y == j;
+    }
+
+    private static int inverse(int a)
+    {
+        return a ^ 1;
     }
 
 
@@ -196,12 +269,17 @@ public class Main
 
         public void finish()
         {
+            logTime();
+            flush();
+            close();
+        }
+
+        public void logTime()
+        {
             if (fromFile)
             {
                 println("time: " + (System.nanoTime() - start) / 1000000);
             }
-            flush();
-            close();
         }
 
         public void print(int[] array)
