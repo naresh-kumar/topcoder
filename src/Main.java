@@ -6,6 +6,8 @@ import java.util.StringTokenizer;
 public class Main
 {
 
+    static boolean debug = false;
+
     public static void main(String[] args) throws IOException
     {
         Reader reader = new Reader(System.in);
@@ -22,6 +24,13 @@ public class Main
     {
         int left;
         int up;
+        int order;
+
+        @Override
+        public String toString()
+        {
+            return "[" + left + " " + up + " " + order + "]";
+        }
     }
 
     private static void hackerCupDeadPixels(Reader reader, Writer writer) throws IOException
@@ -56,18 +65,26 @@ public class Main
                 monitor[deadY][deadX] = 1;
             }
 
-//            for (int i = 0; i < h; ++i)
-//            {
-//                for (int j = 0; j < w; ++j)
-//                {
-//                    writer.append(monitor[i][j] + "");
-//                }
-//                writer.append("\n");
-//            }
+            if (debug)
+            {
+
+                for (int i = 0; i < h; ++i)
+                {
+                    for (int j = 0; j < w; ++j)
+                    {
+                        writer.append(monitor[i][j] + "");
+                    }
+                    writer.append("\n");
+                }
+            }
 
             DPPoint[][] dp = new DPPoint[h][w];
 
             int ans = 0;
+
+            int min = Math.min(p, q);
+            int upDiff = q - min;
+            int leftDiff = p - min;
 
             for (int i = 0; i < h; ++i)
             {
@@ -78,35 +95,34 @@ public class Main
                     {
                         dpPoint.up = i > 0 ? dp[i - 1][j].up + 1 : 1;
                         dpPoint.left = j > 0 ? dp[i][j - 1].left + 1 : 1;
+                        int max_order = 1;
+                        if (i > 0 && j > 0)
+                        {
+                            max_order = Math.max(dp[i - 1][j - 1].order + 1, 1);
+                        }
+                        int potential_order = Math.min(dpPoint.up - upDiff, dpPoint.left - leftDiff);
+                        dpPoint.order = Math.min(max_order, potential_order);
+                        dpPoint.order = Math.max(0, dpPoint.order);
                     }
+                    if (dpPoint.order >= min) ++ans;
                     dp[i][j] = dpPoint;
-
-                    ans += check(dp, i, j, p, q);
                 }
+                if (debug)
+                    writer.append("curr ans " + ans + "\n");
             }
+            if (debug)
+                for (int i = 0; i < h; ++i)
+                {
+                    for (int j = 0; j < w; ++j)
+                    {
+                        writer.append(dp[i][j].toString());
+                    }
+                    writer.append("\n");
+                }
 
             writer.append("Case #" + (testCases - t) + ": " + ans + "\n");
         }
 
-    }
-
-    private static int check(DPPoint[][] dp, int i, int j, int p, int q)
-    {
-        if (i >= q - 1 && j >= p - 1)
-        {
-
-            int min = Math.min(p, q);
-            for (int loop = 0; loop < min; ++loop)
-            {
-                DPPoint dpPoint = dp[i - loop][j - loop];
-                if (dpPoint.up < q - loop || dpPoint.left < p - loop)
-                {
-                    return 0;
-                }
-            }
-            return 1;
-        }
-        return 0;
     }
 
 
