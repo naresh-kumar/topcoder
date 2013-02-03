@@ -74,7 +74,7 @@
     <file path="$PROJECT_DIR$/../libphonenumber/src/com/google/i18n/phonenumbers/PhoneNumberMatcher.java" changelist="fc2388c4-0a35-4df1-a8b5-f49bb2ead436" time="1358177329496" ignored="false" />
     <file path="$PROJECT_DIR$/../libphonenumber/src/com/google/i18n/phonenumbers/PhoneNumberMatch.java" changelist="fc2388c4-0a35-4df1-a8b5-f49bb2ead436" time="1358177329496" ignored="false" />
     <file path="/ShortNumberUtil.java" changelist="fc2388c4-0a35-4df1-a8b5-f49bb2ead436" time="1358178537855" ignored="false" />
-    <file path="/Solution.java" changelist="fc2388c4-0a35-4df1-a8b5-f49bb2ead436" time="1359829316466" ignored="false" />
+    <file path="/Solution.java" changelist="fc2388c4-0a35-4df1-a8b5-f49bb2ead436" time="1359836644384" ignored="false" />
     <file path="$USER_HOME$/pwm_android/src/to/talk/jalebi/app/features/FeatureFactory.java" changelist="fc2388c4-0a35-4df1-a8b5-f49bb2ead436" time="1359446290757" ignored="false" />
     <file path="$USER_HOME$/pwm_android/src/to/talk/jalebi/app/features/notification/MessageNotificationFeature.java" changelist="fc2388c4-0a35-4df1-a8b5-f49bb2ead436" time="1359446262168" ignored="false" />
     <file path="/FeatureFactory.java" changelist="fc2388c4-0a35-4df1-a8b5-f49bb2ead436" time="1359442295279" ignored="false" />
@@ -89,7 +89,8 @@
     <file path="/SubscriptionStatus.java" changelist="fc2388c4-0a35-4df1-a8b5-f49bb2ead436" time="1359446497237" ignored="false" />
     <file path="$USER_HOME$/pwm_android/src/to/talk/jalebi/protocol/Listeners/RosterListener.java" changelist="fc2388c4-0a35-4df1-a8b5-f49bb2ead436" time="1359447328166" ignored="false" />
     <file path="/RosterListener.java" changelist="fc2388c4-0a35-4df1-a8b5-f49bb2ead436" time="1359447327718" ignored="false" />
-    <file path="/Main.java" changelist="fc2388c4-0a35-4df1-a8b5-f49bb2ead436" time="1359829267469" ignored="false" />
+    <file path="/Main.java" changelist="fc2388c4-0a35-4df1-a8b5-f49bb2ead436" time="1359873652626" ignored="false" />
+    <file path="/FordFulkerson.java" changelist="fc2388c4-0a35-4df1-a8b5-f49bb2ead436" time="1359836489591" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,7 +152,7 @@
       <file leaf-file-name="Main.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="66" column="35" selection-start="1667" selection-end="1667" vertical-scroll-proportion="0.53583616">
+            <state line="67" column="47" selection-start="1993" selection-end="1993" vertical-scroll-proportion="1.3982301">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -159,11 +160,48 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="in.txt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/in.txt">
+      <file leaf-file-name="FordFulkerson.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/FordFulkerson.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="0" selection-start="491" selection-end="491" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="56" column="31" selection-start="1840" selection-end="1840" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#2561#2570#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FlowNetwork.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/FlowNetwork.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="26" column="48" selection-start="837" selection-end="837" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#1243#1253#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Bag.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Bag.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FlowEdge.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/FlowEdge.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="34" column="26" selection-start="1193" selection-end="1193" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -171,7 +209,7 @@
       <file leaf-file-name="solutions.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/solutions.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="4" selection-start="218" selection-end="218" vertical-scroll-proportion="0.0">
+            <state line="246" column="22" selection-start="6718" selection-end="6718" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -189,10 +227,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/com/google/i18n/phonenumbers/MetadataManager.java" />
-        <option value="$PROJECT_DIR$/src/Reader.java" />
-        <option value="$PROJECT_DIR$/src/com/google/i18n/phonenumbers/Phonenumber.java" />
-        <option value="$PROJECT_DIR$/src/PhoneNumberBoiler.java" />
         <option value="$PROJECT_DIR$/src/com/google/i18n/phonenumbers/ShortNumberUtil.java" />
         <option value="$PROJECT_DIR$/src/com/google/i18n/phonenumbers/PhoneNumberUtil.java" />
         <option value="$PROJECT_DIR$/src/TopCoder.java" />
@@ -203,6 +237,10 @@
         <option value="$PROJECT_DIR$/input" />
         <option value="$PROJECT_DIR$/output" />
         <option value="$PROJECT_DIR$/src/Solution.java" />
+        <option value="$PROJECT_DIR$/src/Bag.java" />
+        <option value="$PROJECT_DIR$/src/FlowNetwork.java" />
+        <option value="$PROJECT_DIR$/src/FordFulkerson.java" />
+        <option value="$PROJECT_DIR$/src/FlowEdge.java" />
         <option value="$PROJECT_DIR$/src/solutions.java" />
         <option value="$PROJECT_DIR$/src/Main.java" />
       </list>
@@ -445,28 +483,48 @@
     </task>
     <servers />
   </component>
+  <component name="TodoView" selected-index="0">
+    <todo-panel id="selected-file">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="default-changelist">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
     <frame x="52" y="-4" width="1315" height="773" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4016" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1888" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24940805" sideWeight="0.2976" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24940805" sideWeight="0.344" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17284925" sideWeight="0.2976" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.7024" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17284925" sideWeight="0.344" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.656" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32870865" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -533,31 +591,6 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="31" selection-start="468" selection-end="468" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/in.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="0" selection-start="491" selection-end="491" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/solutions.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="95" selection-start="175" selection-end="175" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
         <state line="22" column="32" selection-start="774" selection-end="774" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
@@ -612,26 +645,61 @@
         <state line="36" column="28" selection-start="1316" selection-end="1316" vertical-scroll-proportion="0.524207" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/input">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="2254" selection-end="2254" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/in.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="0" selection-start="491" selection-end="491" vertical-scroll-proportion="0.0">
+        <state line="11" column="0" selection-start="188513" selection-end="188513" vertical-scroll-proportion="0.28156996">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/output">
+    <entry file="file://$PROJECT_DIR$/output.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="0" selection-start="246" selection-end="246" vertical-scroll-proportion="0.42570952" />
+        <state line="19" column="0" selection-start="341" selection-end="341" vertical-scroll-proportion="0.47579297">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Bag.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/FlowNetwork.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="48" selection-start="837" selection-end="837" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#1243#1253#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/FordFulkerson.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="56" column="31" selection-start="1840" selection-end="1840" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2561#2570#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/FlowEdge.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="26" selection-start="1193" selection-end="1193" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/solutions.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="4" selection-start="218" selection-end="218" vertical-scroll-proportion="0.0">
+        <state line="246" column="22" selection-start="6718" selection-end="6718" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -640,7 +708,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="35" selection-start="1667" selection-end="1667" vertical-scroll-proportion="0.53583616">
+        <state line="67" column="47" selection-start="1993" selection-end="1993" vertical-scroll-proportion="1.3982301">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
