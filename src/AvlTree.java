@@ -135,7 +135,7 @@ public class AvlTree
         return node == null ? 0 : height(node.left) - height(node.right);
     }
 
-    private void print(Node node, Main.Writer writer)
+    private void print(Node node, Solution.Writer writer)
     {
         if (node != null)
         {
@@ -146,7 +146,7 @@ public class AvlTree
         }
     }
 
-    public void print(Main.Writer writer)
+    public void print(Solution.Writer writer)
     {
         counter = 0;
         print(root, writer);
