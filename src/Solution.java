@@ -1,5 +1,6 @@
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.StringTokenizer;
 
@@ -11,7 +12,12 @@ public class Solution
     public static void main(String[] args) throws IOException
     {
         Reader reader = new Reader(System.in);
-        Writer writer = new Writer(System.out, false);
+        Writer writer = new Writer(System.out);
+
+        int[] array = new RandomGenerator().getNumbers(9, 0, 20);
+        RMQ rmq = new RMQ(array);
+        System.out.println(Arrays.toString(array));
+        System.out.println(rmq.getMin(0, 8));
 
         reader.close();
         writer.finish();
@@ -75,14 +81,13 @@ public class Solution
 
     public static class Writer extends PrintWriter
     {
-        private boolean fromFile;
+        private boolean debug;
         private long start;
 
 
-        public Writer(OutputStream outputStream, boolean fromFile)
+        public Writer(OutputStream outputStream)
         {
             super(new BufferedOutputStream(outputStream));
-            this.fromFile = fromFile;
             start = System.nanoTime();
         }
 
@@ -95,7 +100,7 @@ public class Solution
 
         public void logTime()
         {
-            if (fromFile)
+            if (debug)
             {
                 println("time: " + (System.nanoTime() - start) / 1000000);
             }
@@ -111,6 +116,14 @@ public class Solution
             }
 
             append("\n");
+        }
+
+        public void print(int[][] m)
+        {
+            for (int i = 0; i < m.length; ++i)
+            {
+                print(m[i]);
+            }
         }
 
         public <T> void print(Collection<T> collection)

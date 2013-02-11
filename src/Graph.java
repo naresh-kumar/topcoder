@@ -10,7 +10,6 @@ public class Graph
 
     public void Graph(int count)
     {
-
         adjacencyList = new ArrayList<List<Vertex>>(count);
         vertexes = new ArrayList<Vertex>(count);
         for (int i = 0; i < count; ++i)
