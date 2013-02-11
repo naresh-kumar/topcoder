@@ -213,54 +213,6 @@ public class solutions
         return (arr[n] * ((InverseEuler((int) arr[r]) * InverseEuler((int) arr[n - r])) % MOD)) % MOD;
     }
 
-    private static void hackerCupSecurity(Solution.Reader reader, Solution.Writer writer) throws IOException
-    {
-        int t = reader.nextInt();
-        int cases = t;
-        while (t-- > 0)
-        {
-            int m = reader.nextInt();
-            String k1 = reader.nextString();
-            String k2 = reader.nextString();
-            int l = k1.length() / m;
-
-            FlowNetwork flowNetwork = new FlowNetwork(2 * m + 2);
-
-            for (int i = 0; i < m; ++i)
-            {
-                for (int j = 0; j < m; ++j)
-                {
-                    if (comp(k1, k2, i * l, j * l, l))
-                    {
-                        flowNetwork.addEdge(new FlowEdge(i + 1, j + m + 1, 1));
-                    }
-                }
-            }
-
-            int source = 0;
-            int sink = 2 * m + 1;
-            for (int i = 0; i < m; ++i)
-            {
-                flowNetwork.addEdge(new FlowEdge(source, i + 1, 1));
-                flowNetwork.addEdge(new FlowEdge(i + 1 + m, sink, 1));
-            }
-
-            FordFulkerson fordFulkerson = new FordFulkerson(flowNetwork, source, sink);
-            int value = fordFulkerson.value();
-            String ans;
-            if (value != m)
-            {
-                ans = "IMPOSSIBLE";
-            }
-            else
-            {
-
-            }
-
-            writer.append("Case #" + (cases - t) + ": " + value + "\n");
-        }
-    }
-
     private static boolean comp(String a, String b, int aStart, int bStart, int len)
     {
         for (int i = 0; i < len; ++i)
