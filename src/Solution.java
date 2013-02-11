@@ -1,6 +1,5 @@
 
 import java.io.*;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.StringTokenizer;
 
@@ -14,10 +13,25 @@ public class Solution
         Reader reader = new Reader(System.in);
         Writer writer = new Writer(System.out);
 
-        int[] array = new RandomGenerator().getNumbers(9, 0, 20);
+        int size = 10;
+        int[] array = new RandomGenerator().getNumbers(size, 0, Integer.MAX_VALUE);
         RMQ rmq = new RMQ(array);
-        System.out.println(Arrays.toString(array));
-        System.out.println(rmq.getMin(0, 8));
+        RMQSegmentTree rmqSegmentTree = new RMQSegmentTree(array);
+
+        for (int i = 0; i < size; ++i)
+        {
+            for (int j = i; j < size; ++j)
+            {
+                if (rmq.getMin(i, j) != rmqSegmentTree.getMin(i, j))
+                {
+                    writer.append("wtf\n");
+                }
+                else
+                {
+                    writer.append("ok\n");
+                }
+            }
+        }
 
         reader.close();
         writer.finish();
