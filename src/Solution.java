@@ -13,55 +13,6 @@ public class Solution
         Reader reader = new Reader(System.in);
         Writer writer = new Writer(System.out, false);
 
-        int[] array = new int[1000];
-        int sum;
-        while (true)
-        {
-            int n = reader.nextInt();
-            if (n == 0) break;
-
-            sum = 0;
-            for (int i = 0; i < n; ++i)
-            {
-                int temp = reader.nextInt();
-                if (temp < 0) temp = -temp;
-
-                sum += temp;
-                array[i] = temp;
-            }
-
-            boolean[][] part = new boolean[sum / 2 + 1][n + 1];
-
-            // initialize top row as true
-            for (int i = 0; i <= n; i++)
-                part[0][i] = true;
-
-            // initialize leftmost column, except part[0][0], as 0
-            for (int i = 1; i <= sum / 2; i++)
-                part[i][0] = false;
-
-            // Fill the partition table in botton up manner
-            for (int i = 1; i <= sum / 2; i++)
-            {
-                for (int j = 1; j <= n; j++)
-                {
-                    part[i][j] = part[i][j - 1];
-                    if (i >= array[j - 1])
-                        part[i][j] = part[i][j] || part[i - array[j - 1]][j - 1];
-                }
-            }
-
-            for (int i = sum / 2; i >= 0; --i)
-            {
-                if (part[i][n])
-                {
-                    writer.append(sum - 2 * i + "\n");
-                    break;
-                }
-            }
-        }
-
-
         reader.close();
         writer.finish();
 
