@@ -1,35 +1,30 @@
 
 import java.io.*;
 import java.util.Collection;
+import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 public class Solution
 {
-
-    static boolean debug = false;
+    static boolean debug = true;
 
     public static void main(String[] args) throws IOException
     {
         Reader reader = new Reader(System.in);
         Writer writer = new Writer(System.out);
+        int size = 100000;
+        MinHeap minHeap = new MinHeap(size);
+        PriorityQueue<Integer> priorityQueue = new PriorityQueue<Integer>(size);
 
-        int size = 10;
-        int[] array = new RandomGenerator().getNumbers(size, 0, Integer.MAX_VALUE);
-        RMQ rmq = new RMQ(array);
-        RMQSegmentTree rmqSegmentTree = new RMQSegmentTree(array);
+        int[] array = new RandomGenerator().getNumbers(size, 0, size);
 
         for (int i = 0; i < size; ++i)
         {
-            for (int j = i; j < size; ++j)
+            minHeap.insert(array[i]);
+            priorityQueue.add(array[i]);
+            if (minHeap.top() != priorityQueue.peek())
             {
-                if (rmq.getMin(i, j) != rmqSegmentTree.getMin(i, j))
-                {
-                    writer.append("wtf\n");
-                }
-                else
-                {
-                    writer.append("ok\n");
-                }
+                System.out.println("wtf");
             }
         }
 
@@ -37,6 +32,7 @@ public class Solution
         writer.finish();
 
     }
+
 
     public static class Reader extends BufferedReader
     {
@@ -95,7 +91,6 @@ public class Solution
 
     public static class Writer extends PrintWriter
     {
-        private boolean debug;
         private long start;
 
 
