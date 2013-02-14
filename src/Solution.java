@@ -1,33 +1,21 @@
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 public class Solution
 {
-    static boolean debug = true;
+    static boolean debug = false;
 
     public static void main(String[] args) throws IOException
     {
         Reader reader = new Reader(System.in);
         Writer writer = new Writer(System.out);
-        int size = 100000;
-        MinHeap minHeap = new MinHeap(size);
-        PriorityQueue<Integer> priorityQueue = new PriorityQueue<Integer>(size);
 
-        int[] array = new RandomGenerator().getNumbers(size, 0, size);
-
-        for (int i = 0; i < size; ++i)
-        {
-            minHeap.insert(array[i]);
-            priorityQueue.add(array[i]);
-            if (minHeap.top() != priorityQueue.peek())
-            {
-                System.out.println("wtf");
-            }
-        }
-
+        LIS lis = new LIS();
+        System.out.println(Arrays.toString(lis.getLIS(new int[]{3, 2, 1, 1, 8})));
+        System.out.println(Arrays.toString(lis.getLIS(new int[]{3, 2, 1, 1, 8, 99, 999})));
         reader.close();
         writer.finish();
 
