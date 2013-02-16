@@ -9,27 +9,13 @@ public class Solution
 
     public static void main(String[] args) throws IOException
     {
-        Reader reader = new Reader(System.in);
+        Reader reader = new Reader("in.txt");
         Writer writer = new Writer(System.out);
 
-        Graph graph = new Graph(10);
-
-        graph.addDirectedEdge(0, 1);
-        graph.addDirectedEdge(1, 2);
-        graph.addDirectedEdge(0, 7);
-        graph.addDirectedEdge(1, 7);
-        graph.addDirectedEdge(2, 5);
-        graph.addDirectedEdge(3, 2);
-        graph.addDirectedEdge(3, 4);
-        graph.addDirectedEdge(4, 5);
-        graph.addDirectedEdge(6, 7);
-
-        System.out.println(graph.topologicalSort(0));
         reader.close();
         writer.finish();
 
     }
-
 
     public static class Reader extends BufferedReader
     {
@@ -124,7 +110,27 @@ public class Solution
             append("\n");
         }
 
+        public void print(boolean[] array)
+        {
+            for (int i = 0; i < array.length; i++)
+            {
+                if (i != 0)
+                    print(' ');
+                print(array[i]);
+            }
+
+            append("\n");
+        }
+
         public void print(int[][] m)
+        {
+            for (int i = 0; i < m.length; ++i)
+            {
+                print(m[i]);
+            }
+        }
+
+        public void print(boolean[][] m)
         {
             for (int i = 0; i < m.length; ++i)
             {
