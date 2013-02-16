@@ -2,6 +2,7 @@
 import java.io.*;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 public class Solution
@@ -13,9 +14,23 @@ public class Solution
         Reader reader = new Reader(System.in);
         Writer writer = new Writer(System.out);
 
-        LIS lis = new LIS();
-        System.out.println(Arrays.toString(lis.getLIS(new int[]{3, 2, 1, 1, 8})));
-        System.out.println(Arrays.toString(lis.getLIS(new int[]{3, 2, 1, 1, 8, 99, 999})));
+        MinHeap<Integer> heap = new MinHeap<Integer>(new Integer[100]);
+        PriorityQueue<Integer> queue = new PriorityQueue<Integer>(100);
+
+        int[] array = new RandomGenerator().getNumbers(100, 0, 100);
+        System.out.println(Arrays.toString(array));
+        for (int i = 0; i < 100; ++i)
+        {
+            heap.insert(array[i]);
+            queue.add(array[i]);
+            if (i > 5)
+            {
+                heap.remove();
+                queue.poll();
+            }
+            System.out.println(heap.top() + " " + queue.peek());
+        }
+
         reader.close();
         writer.finish();
 
