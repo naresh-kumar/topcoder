@@ -3,7 +3,9 @@ public class Vertex
     int id;
     Color color = Color.White;
     Vertex parent;
-    int d;
+    int distance;
+    int discoverTime;
+    int finishTime;
 
     public Vertex(int id)
     {
@@ -13,5 +15,11 @@ public class Vertex
     enum Color
     {
         White, Gray, Black
+    }
+
+    @Override
+    public String toString()
+    {
+        return "{id=" + id + ", time=[" + discoverTime + " " + finishTime + "]" + ", dist=" + distance + ", color=" + color + "}";
     }
 }

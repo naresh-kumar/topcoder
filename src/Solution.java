@@ -1,8 +1,6 @@
 
 import java.io.*;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 public class Solution
@@ -14,23 +12,19 @@ public class Solution
         Reader reader = new Reader(System.in);
         Writer writer = new Writer(System.out);
 
-        MinHeap<Integer> heap = new MinHeap<Integer>(new Integer[100]);
-        PriorityQueue<Integer> queue = new PriorityQueue<Integer>(100);
+        Graph graph = new Graph(10);
 
-        int[] array = new RandomGenerator().getNumbers(100, 0, 100);
-        System.out.println(Arrays.toString(array));
-        for (int i = 0; i < 100; ++i)
-        {
-            heap.insert(array[i]);
-            queue.add(array[i]);
-            if (i > 5)
-            {
-                heap.remove();
-                queue.poll();
-            }
-            System.out.println(heap.top() + " " + queue.peek());
-        }
+        graph.addDirectedEdge(0, 1);
+        graph.addDirectedEdge(1, 2);
+        graph.addDirectedEdge(0, 7);
+        graph.addDirectedEdge(1, 7);
+        graph.addDirectedEdge(2, 5);
+        graph.addDirectedEdge(3, 2);
+        graph.addDirectedEdge(3, 4);
+        graph.addDirectedEdge(4, 5);
+        graph.addDirectedEdge(6, 7);
 
+        System.out.println(graph.topologicalSort(0));
         reader.close();
         writer.finish();
 
@@ -78,7 +72,7 @@ public class Solution
 
         String nextString() throws IOException
         {
-            while (tokenizer == null || !tokenizer.hasMoreTokens())
+            while (!(tokenizer != null && tokenizer.hasMoreTokens()))
             {
                 tokenizer = new StringTokenizer(readLine());
             }
