@@ -13,7 +13,7 @@ public class Tests
     @Test
     public void palindrome()
     {
-        new Permutation().printAllPermutations("abcd");
+        new Permutation().printAllPermutationsWithDuplicates("aaabb");
     }
 }
 
