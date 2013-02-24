@@ -1,13 +1,13 @@
-public class Node
+public class AvlTreeNode
 {
-    Node left;
-    Node right;
-    Node parent;
+    AvlTreeNode left;
+    AvlTreeNode right;
+    AvlTreeNode parent;
     int data;
     int height;
     int size;
 
-    public Node(int data)
+    public AvlTreeNode(int data)
     {
         this.data = data;
         this.height = 1;

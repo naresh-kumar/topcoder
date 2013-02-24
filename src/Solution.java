@@ -1,6 +1,8 @@
 
 import java.io.*;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 public class Solution
@@ -12,8 +14,55 @@ public class Solution
         Reader reader = new Reader(System.in);
         Writer writer = new Writer(System.out);
 
+        String string = reader.nextString();
+
+        SuffixTreeNode root = new SuffixTreeNode(' ');
+
+        char[] charArray = string.toCharArray();
+
+        for (int i = 0; i < charArray.length; ++i)
+            insertInTree(charArray, i, charArray.length - 1, root);
+
+        writer.append((count(root) - 1) + "");
         reader.close();
         writer.finish();
+    }
+
+    private static int count(SuffixTreeNode root)
+    {
+        int count = 1;
+
+        for (SuffixTreeNode node : root.map.values())
+        {
+            count += count(node);
+        }
+        return count;
+    }
+
+    private static void insertInTree(char[] charArray, int i, int j, SuffixTreeNode node)
+    {
+        if (i > j) return;
+
+        char c = charArray[i];
+        SuffixTreeNode suffixTreeNode = node.map.get(c);
+        if (suffixTreeNode == null)
+        {
+            suffixTreeNode = new SuffixTreeNode(c);
+            node.map.put(c, suffixTreeNode);
+        }
+
+        insertInTree(charArray, i + 1, j, suffixTreeNode);
+    }
+
+    public static class SuffixTreeNode
+    {
+        char c;
+        Map<Character, SuffixTreeNode> map = new HashMap<Character, SuffixTreeNode>();
+
+        public SuffixTreeNode(char c)
+        {
+            this.c = c;
+        }
     }
 
     public static class Reader extends BufferedReader

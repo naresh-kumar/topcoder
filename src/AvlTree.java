@@ -1,9 +1,9 @@
 public class AvlTree
 {
-    private Node root;
+    private AvlTreeNode root;
     private int counter;
 
-    public void add(Node node)
+    public void add(AvlTreeNode node)
     {
         if (root == null)
         {
@@ -15,7 +15,7 @@ public class AvlTree
         }
     }
 
-    private void insert(Node curr, Node node)
+    private void insert(AvlTreeNode curr, AvlTreeNode node)
     {
         curr.size++;
         if (node.data < curr.data)
@@ -65,10 +65,10 @@ public class AvlTree
         }
     }
 
-    private void rightRotate(Node node)
+    private void rightRotate(AvlTreeNode node)
     {
-        Node parent = node.parent;
-        Node left = node.left;
+        AvlTreeNode parent = node.parent;
+        AvlTreeNode left = node.left;
 
         if (parent != null)
         {
@@ -83,7 +83,7 @@ public class AvlTree
         left.parent = parent;
         node.parent = left;
 
-        Node leftRight = left.right;
+        AvlTreeNode leftRight = left.right;
         left.right = node;
         node.left = leftRight;
         if (leftRight != null) leftRight.parent = node;
@@ -95,10 +95,10 @@ public class AvlTree
 
     }
 
-    private void leftRotate(Node node)
+    private void leftRotate(AvlTreeNode node)
     {
-        Node parent = node.parent;
-        Node right = node.right;
+        AvlTreeNode parent = node.parent;
+        AvlTreeNode right = node.right;
 
         if (parent != null)
         {
@@ -113,7 +113,7 @@ public class AvlTree
         right.parent = parent;
         node.parent = right;
 
-        Node rightLeft = right.left;
+        AvlTreeNode rightLeft = right.left;
         right.left = node;
         node.right = rightLeft;
         if (rightLeft != null) rightLeft.parent = node;
@@ -125,17 +125,17 @@ public class AvlTree
 
     }
 
-    private int height(Node node)
+    private int height(AvlTreeNode node)
     {
         return node == null ? 0 : node.height;
     }
 
-    private int bFactor(Node node)
+    private int bFactor(AvlTreeNode node)
     {
         return node == null ? 0 : height(node.left) - height(node.right);
     }
 
-    private void print(Node node, Solution.Writer writer)
+    private void print(AvlTreeNode node, Solution.Writer writer)
     {
         if (node != null)
         {
@@ -153,22 +153,22 @@ public class AvlTree
         writer.println();
     }
 
-    public Node find(int i)
+    public AvlTreeNode find(int i)
     {
         counter = 0;
         return find(this.root, i);
     }
 
-    public Node findR(int i)
+    public AvlTreeNode findR(int i)
     {
         counter = 0;
         return findR(this.root, i);
     }
 
 
-    private Node find(Node node, int i)
+    private AvlTreeNode find(AvlTreeNode node, int i)
     {
-        Node res = null;
+        AvlTreeNode res = null;
         if (node != null)
         {
             res = find(node.left, i);
@@ -183,9 +183,9 @@ public class AvlTree
         return res;
     }
 
-    private Node findR(Node node, int i)
+    private AvlTreeNode findR(AvlTreeNode node, int i)
     {
-        Node res = null;
+        AvlTreeNode res = null;
         if (node != null)
         {
             res = findR(node.right, i);
@@ -200,7 +200,7 @@ public class AvlTree
         return res;
     }
 
-    public Node getRoot()
+    public AvlTreeNode getRoot()
     {
         return root;
     }
