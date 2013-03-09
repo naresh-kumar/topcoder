@@ -1,4 +1,7 @@
 import org.junit.Test;
+import utils.MathUtils;
+import utils.RandomUtils;
+import utils.Utils;
 
 import java.util.Stack;
 
@@ -11,6 +14,7 @@ public class Tests
     public void helloWorld()
     {
         System.out.println("hello world");
+        System.out.println(MathUtils.multiply("343".toCharArray(), "2".toCharArray()));
     }
 
     @Test
@@ -107,35 +111,6 @@ public class Tests
     public void subSetSum()
     {
         SubsetSum.isSumZero(new int[]{-7, -3, -2, -8, 8});
-    }
-
-    @Test
-    public void convert()
-    {
-        String str = "1122347298742121212121";
-        solve(str, 0, "");
-
-    }
-
-    private void solve(String str, int index, String ans)
-    {
-        if (index == str.length())
-        {
-            System.out.println(ans);
-            return;
-        }
-
-        char c = str.charAt(index);
-        solve(str, index + 1, ans + (char) (c - '1' + 'a'));
-        if (index < str.length() - 1)
-        {
-            char nextChar = str.charAt(index + 1);
-            int i = (c - '0') * 10 + (nextChar - '0');
-            if (i <= 26)
-            {
-                solve(str, index + 2, ans + (char) (i + 'a' - 1));
-            }
-        }
     }
 }
 
