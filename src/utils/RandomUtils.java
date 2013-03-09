@@ -61,16 +61,6 @@ public class RandomUtils
         return new String(result);
     }
 
-    public static int[] getArray(int size, int limit)
-    {
-        int[] array = new int[size];
-        for (int i = 0; i < size; ++i)
-        {
-            array[i] = getInt(limit);
-        }
-        return array;
-    }
-
     public static List<Integer> getArrayList(int size, int limit)
     {
         List<Integer> list = new ArrayList<Integer>(size);
@@ -81,7 +71,29 @@ public class RandomUtils
         return list;
     }
 
-    public static List<String> getStringList(int size, int len, CharType charType)
+    public int[] getNumbers(int size, int min, int max)
+    {
+        int[] numbers = new int[size];
+        for (int i = 0; i < size; ++i)
+        {
+            numbers[i] = random.nextInt(max - min) + min;
+
+        }
+        return numbers;
+    }
+
+    public String getNumbers(int size, int min, int max, char delimiter)
+    {
+        int[] numbers = getNumbers(size, min, max);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < size; ++i)
+        {
+            sb.append(numbers[i]).append(delimiter);
+        }
+        return sb.toString();
+    }
+
+    public static List<String> getStrings(int size, int len, CharType charType)
     {
         List<String> list = new ArrayList<String>(size);
         for (int i = 0; i < size; ++i)

@@ -1,7 +1,7 @@
 import org.junit.Test;
+import tree.Traversal;
+import tree.Node;
 import utils.MathUtils;
-import utils.RandomUtils;
-import utils.Utils;
 
 import java.util.Stack;
 
@@ -98,12 +98,12 @@ public class Tests
     @Test
     public void inPrePost()
     {
-        TreeNode node = InPreToPost.create(new int[]{1, 2, 3, 5, 8, 9, 6, 10, 4, 7}, new int[]{2, 1, 8, 5, 9, 3, 10, 6, 7, 4});
-        InPreToPost.pre(node);
+        Node node = Traversal.createTreeByPreAndInOrder(new int[]{1, 2, 3, 5, 8, 9, 6, 10, 4, 7}, new int[]{2, 1, 8, 5, 9, 3, 10, 6, 7, 4});
+        Traversal.pre(node);
         System.out.println();
-        InPreToPost.post(node);
+        Traversal.post(node);
         System.out.println();
-        InPreToPost.in(node);
+        Traversal.in(node);
         System.out.println();
     }
 
