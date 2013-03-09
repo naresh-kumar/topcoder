@@ -1,3 +1,5 @@
+package misc;
+
 import java.util.*;
 
 // SRM 310 - div 2 - level 3

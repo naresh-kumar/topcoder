@@ -72,7 +72,6 @@ public class Solution
         }
     }
 
-
     public static class Writer extends PrintWriter
     {
         private long start;

@@ -1,10 +1,10 @@
+package misc;
+
 public class DecToBinary
 {
     public static String printBinary(String n)
     {
-
         int intPart = Integer.parseInt(n.substring(0, n.indexOf('.')));
-
         int decPart = Integer.parseInt(n.substring(n.indexOf('.') + 1, n.length()));
 
         String int_string = "";

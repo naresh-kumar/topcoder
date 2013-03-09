@@ -1,3 +1,5 @@
+package misc;
+
 public class RegexParser
 {
     public static boolean match(String pattern, String string)

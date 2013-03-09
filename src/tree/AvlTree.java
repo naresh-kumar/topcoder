@@ -1,5 +1,7 @@
 package tree;
 
+import utils.Writer;
+
 public class AvlTree
 {
     private AvlTreeNode root;
@@ -137,7 +139,7 @@ public class AvlTree
         return node == null ? 0 : height(node.left) - height(node.right);
     }
 
-    private void print(AvlTreeNode node, Solution.Writer writer)
+    private void print(AvlTreeNode node, Writer writer)
     {
         if (node != null)
         {
@@ -148,7 +150,7 @@ public class AvlTree
         }
     }
 
-    public void print(Solution.Writer writer)
+    public void print(Writer writer)
     {
         counter = 0;
         print(root, writer);

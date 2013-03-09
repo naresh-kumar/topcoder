@@ -1,3 +1,5 @@
+package misc;
+
 public class MinHeap<T extends Comparable<T>>
 {
     T[] heap;

@@ -1,3 +1,5 @@
+package dp;
+
 public class SubsetSum
 {
     public static boolean isSumZero(int[] array)

@@ -1,3 +1,8 @@
+package graph;
+
+import utils.Reader;
+import utils.Writer;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,8 +14,8 @@ public class BalanceInRoom
 {
     public void solve() throws IOException
     {
-        BufferedReader reader = new Solution.Reader("in.txt");
-        Solution.Writer writer = new Solution.Writer(System.out);
+        BufferedReader reader = new Reader("in.txt");
+        Writer writer = new Writer(System.out);
 
         int n = Integer.parseInt(reader.readLine());
         boolean[] root = new boolean[n];
