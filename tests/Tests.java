@@ -1,17 +1,21 @@
+import dp.LCSString;
 import dp.SubsetSum;
 import misc.Permutation;
 import misc.RegexParser;
 import misc.TowerOfHanoi;
 import org.junit.Test;
 import tree.LinkedList;
-import tree.Traversal;
 import tree.Node;
+import tree.Traversal;
 import utils.MathUtils;
+import utils.RandomUtils;
+import utils.TimeTracker;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Stack;
 
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.*;
 
 public class Tests
 {
@@ -116,6 +120,38 @@ public class Tests
     public void subSetSum()
     {
         SubsetSum.isSumZero(new int[]{-7, -3, -2, -8, 8});
+    }
+
+    @Test
+    public void testStringLCS()
+    {
+        assertEquals(0, LCSString.getLCSLength(Arrays.asList("abc", "aac"), Arrays.asList("abb", "aab")));
+        assertEquals(0, LCSString.getLCSLengthSorting(Arrays.asList("abc", "aac"), Arrays.asList("abb", "aab")));
+        assertEquals(1, LCSString.getLCSLength(Arrays.asList("abc", "aac"), Arrays.asList("abb", "abc")));
+        assertEquals(1, LCSString.getLCSLengthSorting(Arrays.asList("abc", "aac"), Arrays.asList("abb", "abc")));
+        List<String> list1 = Arrays.asList("abc", "bde", "yyy", "uuu");
+        List<String> list2 = Arrays.asList("abc", "bde", "yyy", "uuu");
+        assertEquals(4, LCSString.getLCSLength(list1, list2));
+        assertEquals(4, LCSString.getLCSLengthSorting(list1, list2));
+        list1 = Arrays.asList("abc", "bde", "yyy", "uuu", "dfdfd");
+        list2 = Arrays.asList("abc", "bde", "dfdfd", "yyy", "uuu");
+        assertEquals(4, LCSString.getLCSLength(list1, list2));
+        assertEquals(5, LCSString.getLCSLengthSorting(list1, list2));
+    }
+
+    @Test
+    public void perfTestStringLCS()
+    {
+        List<String> strings1 = RandomUtils.getStrings(10000, 200, RandomUtils.CharType.ALL);
+        List<String> strings2 = RandomUtils.getStrings(10000, 200, RandomUtils.CharType.ALL);
+
+        TimeTracker.start("lcs");
+        LCSString.getLCSLength(strings1, strings2);
+        TimeTracker.stop("lcs");
+
+        TimeTracker.start("lcs");
+        LCSString.getLCSLengthSorting(strings1, strings2);
+        TimeTracker.stop("lcs");
     }
 }
 
