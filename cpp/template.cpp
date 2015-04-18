@@ -77,6 +77,10 @@ void printList(T l) {
     cout << endl;
 }
 
+bool valid(int i, int j, int n) {
+    return i>=0 && i<n && j>=0 && j<n;
+}
+
 int main() {
     freopen("/Users/knaresh/codechef/codechef/codechef/in.txt", "r", stdin);
     freopen("/Users/knaresh/codechef/codechef/codechef/out.txt", "w", stdout);
