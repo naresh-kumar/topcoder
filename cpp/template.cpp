@@ -59,8 +59,9 @@ T gcd(T a, T b) {
 struct Point {
   int x;
   int y;
-}
+};
 
+template<class T>
 void printMap(T m) {
     for(const auto& i : m) {
       cout << i.first << " " << i.second << " ";
