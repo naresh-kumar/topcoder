@@ -1,3 +1,5 @@
 out/
 workspace.xml
 .idea/workspace.xml
+cpp/a.out
+*.swp

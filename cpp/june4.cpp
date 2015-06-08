@@ -124,17 +124,49 @@ int overlap(string& s1, string& s2) {
   return 0;
 }
 
-int solve () {
-  return 0;
+bool almost_equal(double x, double y, int ulp) {
+    return std::abs(x-y) < std::numeric_limits<double>::epsilon() * std::abs(x+y) * ulp
+           || std::abs(x-y) < std::numeric_limits<double>::min();
+}
+
+double drand(double l, double u) {
+  std::uniform_real_distribution<double> unif(l,u);
+  static std::default_random_engine re;
+  return unif(re);
+}
+
+bool isInside(double a, double b, double c) {
+  return a > b && a < c;
+}
+
+void solve() {
+  int T1 = ss;
+  int T2 = ss;
+  int t1 = ss;
+  int t2 = ss;
+  if (T1 > T2) {
+    int temp = T1;
+    T1 = T2;
+    T2 = temp;
+    temp = t1;
+    t1 = t2;
+    t2 = temp;
+  }
+  double ans = 0.0;
+  ans += (min(t1,T2)/(double)T2 + min(t1+t2,T2)/(double)T2) * min(min(t2,T1), T2-t1) / 2;
+  if (T1 > t2) {
+    ans += min(t1+t2,T2)/(double)T2 * min(0, T2-t1-t2) * min(0, T1-t2);
+  }
+  ans += (min(t1+t2,T2)/(double)T2 + min(T2,t2+min(t1,T2-T1))/(double)T2) * min(0,T1-T2+t1)/2;
+  printf("%.6lf\n", ans);
 }
 
 int main() {
   //freopen("/Users/knaresh/codejam/codejam/in.txt", "r", stdin);
   //freopen("/Users/knaresh/codejam/codejam/out.txt", "w", stdout);
   int tests = ss;
-  int no = 1;
   while(tests--) {
-    printf("Case #%d: %d\n", no++, solve());
+    solve();
   }
   return 0;
 }

@@ -33,9 +33,11 @@ using namespace std;
 
 typedef long long ll;
 typedef vector<int> vi;
+typedef vector<double> vd;
 typedef vector<string> vs;
 typedef pair<int, int> pii;
 typedef pair<string, int> psi;
+typedef pair<double, int> pdi;
 typedef pair<int, string> pis;
 typedef pair<string, string> pss;
 typedef map<string, int> msi;
@@ -125,16 +127,39 @@ int overlap(string& s1, string& s2) {
 }
 
 int solve () {
-  return 0;
+  int sol = 0;
+  int n = ss;
+  vector<pair<int, int> > areas;
+  rep (i, 0, n) {
+    int points = ss;
+    int x1,y1;
+    int lastx = 0;
+    int lasty = 0;
+    ll area = 0;
+    int minx = INF;
+    rep (j, 0, points) {
+      int x = ss; int y = ss;
+      if (x < minx) minx = x;
+    }
+    areas.push_back(make_pair(minx * -1, i));
+  }
+  sort(all(areas));
+  vi ans(n,0);
+  rep (j, 0, n) {
+    ans[areas[j].second] = j;
+  }
+  rep (j, 0, n)
+    cout << ans[j] << " ";
+  cout << endl;
+  return sol;
 }
 
 int main() {
   //freopen("/Users/knaresh/codejam/codejam/in.txt", "r", stdin);
   //freopen("/Users/knaresh/codejam/codejam/out.txt", "w", stdout);
   int tests = ss;
-  int no = 1;
-  while(tests--) {
-    printf("Case #%d: %d\n", no++, solve());
+  while (tests--) {
+    solve();
   }
   return 0;
 }

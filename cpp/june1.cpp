@@ -43,7 +43,7 @@ typedef map<string, string> mss;
 typedef map<int, int> mii;
 typedef map<int, string> mis;
 
-#define INF 2147483647
+#define INF 1000000000
 #define PI  3.14159265358979323846  /* pi */
 
 template<class T> void setmax(T &a, T b) { if(b>a) a=b; }
@@ -124,17 +124,24 @@ int overlap(string& s1, string& s2) {
   return 0;
 }
 
-int solve () {
-  return 0;
+ll solve () {
+  int n = ss;
+  ll sol = 0;
+  int mem = 0;
+  rep(i, 0, n) {
+    int required = ss;
+    sol += max(0, required - mem);
+    mem = required;
+  }
+  return sol;
 }
 
 int main() {
   //freopen("/Users/knaresh/codejam/codejam/in.txt", "r", stdin);
   //freopen("/Users/knaresh/codejam/codejam/out.txt", "w", stdout);
   int tests = ss;
-  int no = 1;
-  while(tests--) {
-    printf("Case #%d: %d\n", no++, solve());
+  while (tests--) {
+    printf("%lld\n", solve());
   }
   return 0;
 }
