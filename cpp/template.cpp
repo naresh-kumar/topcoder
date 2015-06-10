@@ -32,80 +32,50 @@ using namespace std;
 #define iter(i,v) for(auto i : (v))
 
 typedef long long ll;
+
 typedef vector<int> vi;
+typedef vector<ll> vll;
+typedef vector<double> vd;
 typedef vector<string> vs;
+
 typedef pair<int, int> pii;
-typedef pair<string, int> psi;
 typedef pair<int, string> pis;
+typedef pair<string, int> psi;
 typedef pair<string, string> pss;
-typedef map<string, int> msi;
-typedef map<string, string> mss;
+
 typedef map<int, int> mii;
 typedef map<int, string> mis;
+typedef map<string, int> msi;
+typedef map<string, string> mss;
 
 #define INF 2147483647
 #define PI  3.14159265358979323846  /* pi */
 
+template<class T> T gcd(T a, T b) { return b==0?a:gcd(b,a%b); }
 template<class T> void setmax(T &a, T b) { if(b>a) a=b; }
 template<class T> void setmin(T &a, T b) { if(b<a) a=b; }
-template<class T> T gcd(T a, T b) { return b==0?a:gcd(b,a%b); }
-
+template<class T> bool isInGrid(T i, T j, T n) { return i>=0 && i<n && j>=0 && j<n; }
+template<class T> bool isInside(T a, T b, T c) { return a > b && a < c; }
 struct Point { int x; int y; };
-
-template<class T>
-void printmap(T m) {
-  for(const auto& i : m) cout << i.first << " " << i.second << " ";
+template<class T> void printmap(T m) {
+  for (const auto& i : m) cout << i.first << " " << i.second << " ";
   cout << endl;
 }
-
-template<typename T>
-void printlist(T l) {
-  for(const auto& i : l) cout << i << " ";
-  cout << endl;
+template<typename T> void printlist(T l) {
+  for (const auto& i : l) cout << i << " "; cout << endl;
 }
-
-bool valid(int i, int j, int n) {
-  return i>=0 && i<n && j>=0 && j<n;
+template<typename T> T reverse(T n) {
+  T r = 0; while (n != 0) { r = r*10; r = r+n%10; n = n/10; } return r;
 }
-
-template<typename T>
-T reverse(T n) {
-  T reverse = 0;
-  while (n != 0) {
-    reverse = reverse * 10;
-    reverse = reverse + n%10;
-    n = n/10;
-  }
-  return reverse;
+template<typename T> int firstdigit(T n) {
+  int ans = 0; while (n != 0) { ans = n%10; n = n/10; } return ans;
 }
-
-template<typename T>
-int firstdigit(T n) {
-  int ans = 0;
-  while (n != 0) {
-    ans = n%10;
-    n = n/10;
-  }
-  return ans;
+template<typename T> int digits(T n) {
+  int ans = 0; while (n != 0) { ans++; n = n/10; } return ans;
 }
-
-template<typename T>
-int digits(T n) {
-  int ans = 0;
-  while (n != 0) {
-    ans++;
-    n = n/10;
-  }
-  return ans;
-}
-
 int frequency(string& str, char ch) {
-  int count = 0;
-  rep(i, 0, str.length())
-    if (str[i] == ch) count++;
-  return count;
+  int ans = 0; rep(i,0,str.length()) if (str[i] == ch) ans++; return ans;
 }
-
 int overlap(string& s1, string& s2) {
   // 1 in case of single string
   int start = 0;
@@ -124,17 +94,50 @@ int overlap(string& s1, string& s2) {
   return 0;
 }
 
-int solve () {
-  return 0;
+bool almost_equal(double x, double y, int ulp) {
+  return std::abs(x-y) < std::numeric_limits<double>::epsilon() * std::abs(x+y) * ulp
+    || std::abs(x-y) < std::numeric_limits<double>::min();
+}
+
+double drand(double l, double u) {
+  std::uniform_real_distribution<double> unif(l,u);
+  static std::default_random_engine re;
+  return unif(re);
+}
+
+
+#define SIZE 1024*128
+char buffer[SIZE];
+int buffer_size;
+int pointer = 0;
+int max_digits = 12;
+int nextInt() {
+  int num = 0;
+  char c;
+  int r = buffer_size - pointer;
+  if (r < max_digits) {
+    memcpy(buffer, buffer + pointer, r);
+    buffer_size = r + fread(buffer + r, 1, SIZE-r, stdin);
+    pointer = 0;
+  }
+  while(true) {
+    c = buffer[pointer];
+    if (c == '\n' || c == ' ') {
+      ++pointer;
+      return num;
+    } else {
+      num = num*10 + c - '0';
+    }
+    ++pointer;
+  }
 }
 
 int main() {
   //freopen("/Users/knaresh/codejam/codejam/in.txt", "r", stdin);
   //freopen("/Users/knaresh/codejam/codejam/out.txt", "w", stdout);
+  //buffer_size = fread(buffer, 1, SIZE, stdin);
   int tests = ss;
-  int no = 1;
   while(tests--) {
-    printf("Case #%d: %d\n", no++, solve());
   }
   return 0;
 }

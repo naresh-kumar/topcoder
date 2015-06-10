@@ -140,24 +140,27 @@ bool isInside(double a, double b, double c) {
 }
 
 void solve() {
-  int T1 = ss;
-  int T2 = ss;
-  int t1 = ss;
-  int t2 = ss;
+  double T1 = ss;
+  double T2 = ss;
+  double t1 = ss;
+  double t2 = ss;
   if (T1 > T2) {
-    int temp = T1;
-    T1 = T2;
-    T2 = temp;
-    temp = t1;
-    t1 = t2;
-    t2 = temp;
+    swap(T1, T2);
+    swap(t1, t2);
   }
   double ans = 0.0;
-  ans += (min(t1,T2)/(double)T2 + min(t1+t2,T2)/(double)T2) * min(min(t2,T1), T2-t1) / 2;
-  if (T1 > t2) {
-    ans += min(t1+t2,T2)/(double)T2 * min(0, T2-t1-t2) * min(0, T1-t2);
+  double denom = 2.0 * T2 * T1;
+  ans += min(t2,T1) * min(t2,T1) /denom;
+  ans += 2.0 * t2 * max(0.0, T1-t2) / denom;
+  ll one = min(t1, T2);
+  ll two = (T2-t1 > 0 && T2-t1 < T1) ? t1 : -1;
+  ll three = min(t1, T2-T1);
+  if (two != -1) {
+    ans += (one + two) * (T2-t1) / denom;
+    ans += (two + three) * (T1-T2+t1) / denom;
   }
-  ans += (min(t1+t2,T2)/(double)T2 + min(T2,t2+min(t1,T2-T1))/(double)T2) * min(0,T1-T2+t1)/2;
+  else
+    ans += (one + three) * T1 / denom;
   printf("%.6lf\n", ans);
 }
 
