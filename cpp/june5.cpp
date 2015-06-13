@@ -10,6 +10,7 @@
 #include <ctype.h>
 #include <list>
 #include <map>
+#include <unordered_map>
 #include <numeric>
 #include <queue>
 #include <random>
@@ -137,48 +138,116 @@ int nextInt() {
 
 ll factorial(ll x) { return (x < 2) ? 1 : x*factorial(x-1); }
 
-ll getNcr(ll n, ll r) { return factorial(n)/(factorial(r) * factorial(n-r)); }
+ll getNcr(ll n, ll r) {
+  return factorial(n)/(factorial(r) * factorial(n-r));
+}
 
-const int limit = 2001;
-int dp[limit][limit];
-int mod = 1000000000;
-int ncr[4000][2000];
+clock_t lastMark = 0;
+void markTime(string tag) {
+  clock_t mark = clock();
+  printf("time %s %lf\n", tag.c_str(), double(mark - lastMark) / CLOCKS_PER_SEC);
+  lastMark = mark;
+}
+class HashEntry {
+private:
+      int key;
+      int value;
+public:
+      HashEntry(int key, int value) {
+            this->key = key;
+            this->value = value;
+      }
+
+      int getKey() {
+            return key;
+      }
+
+      int getValue() {
+            return value;
+      }
+};
+
+int mod = 1000000007;
+int ncr[5001][5001];
 int main() {
-  //freopen("/Users/knaresh/topcoder/cpp/in.txt", "r", stdin);
+  //freopen("/Users/knaresh/codejam/codejam/in.txt", "r", stdin);
   //freopen("/Users/knaresh/codejam/codejam/out.txt", "w", stdout);
-  buffer_size = fread(buffer, 1, SIZE, stdin);
-
-  for (int i = 0; i < 4000; i++) {
-    for (int j = 0; j < 2000; j++) {
-      if (j > i) break;
-      if (j == 0 || j == i)
-        ncr[i][j] = 1;
-      else
-        ncr[i][j] = (ncr[i-1][j-1] + ncr[i-1][j]) % mod;
-    }
-  }
-
-  int tests = nextInt();
+  //buffer_size = fread(buffer, 1, SIZE, stdin);
+  markTime("start");
+  int tests = ss;
   while(tests--) {
-    int n = nextInt();
-    int m = nextInt();
-    rep(i, 0, n+1) {
-      rep(j, 0, m+1) {
-        if (i == 0) dp[i][j] = 0;
-        else if (j == 0) dp[i][j] = 1;
-        else if (i == 1) {
-          dp[i][j] = (dp[i][j-1] + ncr[j+m-1][m-1]) % mod;
-        }
-        else {
-          int sum = 0;
-          rep(k, 0, j+1)
-            sum = (sum + (dp[i-1][k] * (ll)ncr[k+m-1][m-1])%mod)%mod;
-          dp[i][j] = sum;
-        }
+    int n = ss;
+    for (int i = 0; i < n+1; i++) {
+      for (int j = 0; j <= i; j++) {
+        if (j == 0 || j == i)
+          ncr[i][j] = 1;
+        else
+          ncr[i][j] = (ncr[i-1][j-1] + (ll)ncr[i-1][j]) % mod;
       }
     }
-    //rep(i, 0, n+1) printlist(&dp[i][0], m+1);
-    printf("%d\n", dp[n][m]);
+    markTime("pascal");
+    int q = ss;
+    char str[n];
+    scanf("%s", str);
+    int tableSize = 5003;
+    int value[tableSize];
+    ll key[tableSize];
+    int frequency[n+1];
+
+    memset(frequency, 0, sizeof(frequency));
+    memset(key, 0, sizeof(key));
+    memset(value, 0, sizeof(value));
+
+    ll hash_arr[n];
+    ll hash = 13;
+    rep(i, 0, n) {
+      hash = 13 * 31 + str[i];
+      hash_arr[i] = hash;
+      int index = hash % tableSize;
+      if (index < 0) index += tableSize;
+      while (key[index] != 0 && key[index] != hash) index = (index + 1) % tableSize;
+      value[index]++;
+      key[index] = hash;
+    }
+    rep (i, 0, tableSize) {
+      frequency[value[i]]++;
+    }
+    markTime("count init");
+    rep(l, 2, n+1) {
+      memset(key, 0, sizeof(key));
+      memset(value, 0, sizeof(value));
+      rep(j, 0, n-l+1) {
+        hash = hash_arr[j] * 31 + str[j+l-1];
+        hash_arr[j] = hash;
+        int index = hash % tableSize;
+        if (index < 0) index += tableSize;
+        while (key[index] != 0 && key[index] != hash) index = (index + 1) % tableSize;
+        value[index]++;
+        key[index] = hash;
+      }
+      int allUnique = 1;
+      rep (i, 0, tableSize) {
+        frequency[value[i]]++;
+        allUnique = allUnique && value[i] < 2;
+      }
+      if (allUnique) {
+        int sum = 0;
+        rep(i, l+1, n+1) sum += n - i + 1;
+        frequency[1] += sum;
+        break;
+      }
+    }
+    markTime("count");
+    //rep(i, 0, 10) printlist(&frequency[i], 20);
+    rep(i, 0, q) {
+      int k = ss;
+      int ans = 0;
+      rep(i, k, n+1) {
+        ans = (ans + (frequency[i]*(ll)ncr[i][min(k,i-k)])%mod)%mod;
+      }
+      printf("%d\n", ans);
+    }
+    markTime("ans");
   }
   return 0;
 }

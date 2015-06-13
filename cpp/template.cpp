@@ -64,6 +64,9 @@ template<class T> void printmap(T m) {
 template<typename T> void printlist(T l) {
   for (const auto& i : l) cout << i << " "; cout << endl;
 }
+template<typename T> void printlist(T* l, int size) {
+  for (int i = 0; i < size; ++i) cout << *(l+i) << " "; cout << endl;
+}
 template<typename T> T reverse(T n) {
   T r = 0; while (n != 0) { r = r*10; r = r+n%10; n = n/10; } return r;
 }
@@ -132,6 +135,24 @@ int nextInt() {
   }
 }
 
+ll factorial(ll x) { return (x < 2) ? 1 : x*factorial(x-1); }
+
+ll getNcr(ll n, ll r) {
+  return factorial(n)/(factorial(r) * factorial(n-r));
+}
+
+void pascalTriangle() {
+  int ncr[4000][2000];
+  for (int i = 0; i < 4000; i++) {
+    for (int j = 0; j < 2000; j++) {
+      if (j > i) break;
+      if (j == 0 || j == i)
+        ncr[i][j] = 1;
+      else
+        ncr[i][j] = (ncr[i-1][j-1] + (ll)ncr[i-1][j]) % mod;
+    }
+  }
+}
 int main() {
   //freopen("/Users/knaresh/codejam/codejam/in.txt", "r", stdin);
   //freopen("/Users/knaresh/codejam/codejam/out.txt", "w", stdout);
