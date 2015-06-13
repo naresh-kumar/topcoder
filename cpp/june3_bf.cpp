@@ -108,11 +108,12 @@ double drand(double l, double u) {
   return unif(re);
 }
 
+
 #define SIZE 1024*128
 char buffer[SIZE];
 int buffer_size;
 int pointer = 0;
-int max_digits = 5;
+int max_digits = 12;
 int nextInt() {
   int num = 0;
   char c;
@@ -153,7 +154,7 @@ int main() {
       if (j == 0 || j == i)
         ncr[i][j] = 1;
       else
-        ncr[i][j] = (ncr[i-1][j-1] + (ll)ncr[i-1][j]) % mod;
+        ncr[i][j] = (ncr[i-1][j-1] + ncr[i-1][j]) % mod;
     }
   }
 
@@ -161,13 +162,19 @@ int main() {
   while(tests--) {
     int n = nextInt();
     int m = nextInt();
-    memset(dp, 0, sizeof(dp[0][0]) * 2001 * 2001);
-    rep(i, 0, n+1) dp[i][0] = 1;
-    rep(j, 0, m+1) dp[0][j] = 1;
-    rep(i, 1, n+1) {
-      rep(j, 1, m+1) {
-        dp[i][j] =
-          ((dp[i-1][j] * (ll)ncr[j+m-1][m-1])%mod + (ll)dp[i][j-1])%mod;
+    rep(i, 0, n+1) {
+      rep(j, 0, m+1) {
+        if (i == 0) dp[i][j] = 0;
+        else if (j == 0) dp[i][j] = 1;
+        else if (i == 1) {
+          dp[i][j] = (dp[i][j-1] + ncr[j+m-1][m-1]) % mod;
+        }
+        else {
+          int sum = 0;
+          rep(k, 0, j+1)
+            sum = (sum + (dp[i-1][k] * (ll)ncr[k+m-1][m-1])%mod)%mod;
+          dp[i][j] = sum;
+        }
       }
     }
     //rep(i, 0, n+1) printlist(&dp[i][0], m+1);
