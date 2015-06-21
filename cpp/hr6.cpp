@@ -114,7 +114,7 @@ ll getNcr(ll n, ll r) {
   return factorial(n)/(factorial(r) * factorial(n-r));
 }
 
-int mod = 1000007;
+int mod = 1000000007;
 void pascalTriangle() {
   int ncr[4000][2000];
   for (int i = 0; i < 4000; i++) {
@@ -153,12 +153,85 @@ int nextInt() {
   }
 }
 
+struct Node {
+  int count = 0;
+  int one = 0;
+  int two = 0;
+};
+
+void printtree(vector<Node> l) {
+  for (const auto& i : l) cout << i.count << " " <<  i.one << " " << i.two << " : "; cout << endl;
+}
+
+ll a[100001];
+ll b[100001];
+
+int solve(int x, int y, int index, int start, int end, vector<Node>& tree) {
+  ll ans = 0;
+  int p = max(x,start)-start;
+  int q = min(y,end)-start;
+  if (tree[index].count > 0) {
+    int size = q-p+1;
+    ans += (tree[index].count*(a[q] - (p>0?a[p-1]:0)))%mod;
+    ans %= mod;
+    ans += (tree[index].two*size)%mod;
+    ans %= mod;
+    ans += (tree[index].one*(b[q] - (p>0?b[p-1]:0)))%mod;
+    ans %= mod;
+    //printf("x:%d y:%d index:%d start:%d end:%d ans:%d\n", x, y, index, start, end, ans);
+  }
+  if (start == end) return ans;
+  int mid = start + (end-start)/2;
+  if (x <= mid)
+    ans = (ans + solve(x, min(y,mid), index*2+1, start, mid, tree))%mod;
+  if (mid+1 <= y)
+    ans = (ans + solve(max(mid+1,x), y, index*2+2, mid+1, end, tree))%mod;
+  return ans;
+}
+
+void update(int x, int y, int index, int start, int end, int offset, vector<Node>& tree) {
+  if (x == start && y == end) {
+    //printf("x:%d y:%d index:%d start:%d end:%d offset:%d\n", x, y, index, start, end, offset);
+    tree[index].count++;
+    tree[index].one = (tree[index].one + offset)%mod;
+    tree[index].two = (tree[index].two + (offset*offset)%mod)%mod;
+    return;
+  }
+  int mid = start + (end-start)/2;
+  if (x <= mid)
+    update(x, min(y,mid), index*2+1, start, mid, offset, tree);
+  if (mid+1 <= y)
+    update(max(mid+1,x), y, index*2+2, mid+1, end, offset + max(mid+1-x, 0), tree);
+}
+
 int main() {
   //freopen("/Users/knaresh/codejam/codejam/in.txt", "r", stdin);
   //freopen("/Users/knaresh/codejam/codejam/out.txt", "w", stdout);
   //buffer_size = fread(buffer, 1, SIZE, stdin);
-  int tests = ss;
-  while(tests--) {
+  int n = ss;
+  int q = ss;
+  int x = (int)(ceil(log2(n))); //Height of segment tree
+  int max_size = 2*(int)pow(2, x) - 1; //Maximum size of segment tree
+  vector<Node> tree(max_size);
+  ll suma = 0;
+  ll sumb = 0;
+  rep(i, 0, 100001) {
+    suma = (suma + ((i+1)*(i+2LL))%mod)%mod;
+    sumb = (sumb + (i*2 + 3LL))%mod;
+    a[i] = suma;
+    b[i] = sumb;
+  }
+  rep (i, 0, q) {
+    int type = ss;
+    int x = ss-1;
+    int y = ss-1;
+    //printf("%d %d %d\n", type, x, y);
+    if (type == 1) {
+      update(x, y, 0, 0, n-1, 0, tree);
+      //printtree(tree);
+    } else {
+      cout << solve(x, y, 0, 0, n-1, tree) << endl;
+    }
   }
   return 0;
 }

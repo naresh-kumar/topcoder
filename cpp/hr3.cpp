@@ -157,8 +157,26 @@ int main() {
   //freopen("/Users/knaresh/codejam/codejam/in.txt", "r", stdin);
   //freopen("/Users/knaresh/codejam/codejam/out.txt", "w", stdout);
   //buffer_size = fread(buffer, 1, SIZE, stdin);
-  int tests = ss;
-  while(tests--) {
+  int n = ss;
+  int k = ss;
+  vi boys;
+  vi girls;
+  boys.reserve(n);
+  girls.reserve(n);
+  rep(i,0,n) boys.push_back(ss);
+  rep(i,0,n) girls.push_back(ss);
+  sort(all(boys));
+  sort(all(girls));
+  int pairs = 0;
+  for (int i = 0, j = 0; i < n && j < n;) {
+    if (abs(boys[i] - girls[j]) <= k) {
+      ++pairs; ++i; ++j;
+    } else if (boys[i] < girls[j]) {
+      ++i;
+    } else {
+      ++j;
+    }
   }
+  cout << pairs;
   return 0;
 }

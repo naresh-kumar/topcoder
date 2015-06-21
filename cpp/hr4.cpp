@@ -67,7 +67,7 @@ template<typename T> void printlist(T l) {
 template<typename T> void printlist(T* l, int size) {
   for (int i = 0; i < size; ++i) cout << *(l+i) << " "; cout << endl;
 }
-template<typename T> T reverse(T n) {
+template<typename T> T reverseNumber(T n) {
   T r = 0; while (n != 0) { r = r*10; r = r+n%10; n = n/10; } return r;
 }
 template<typename T> int firstdigit(T n) {
@@ -157,8 +157,44 @@ int main() {
   //freopen("/Users/knaresh/codejam/codejam/in.txt", "r", stdin);
   //freopen("/Users/knaresh/codejam/codejam/out.txt", "w", stdout);
   //buffer_size = fread(buffer, 1, SIZE, stdin);
-  int tests = ss;
-  while(tests--) {
+  int n = ss;
+  vi up;
+  up.reserve(n);
+  rep(i, 0, n) {
+    up.push_back(ss);
   }
+  ll ans = 0;
+  irep(i, n-1, 0) {
+    int start1 = 0;
+    int start2 = i;
+    ll sum = -1;
+    for (int k=0; k<i-k; ++k) {
+      if (sum < 0) {
+        sum = 0;
+        start1 = k;
+        start2 = i-k;
+      }
+      ll curr = up[k] * (ll)up[i-k];
+      sum += curr;
+      setmax<ll>(ans, sum);
+    }
+  }
+  rep(i, 0, n) {
+    int start1 = i;
+    int start2 = n-1;
+    ll sum = -1;
+    for (int k=0; i+k<n-1-k; ++k) {
+      if (sum < 0) {
+        sum = 0;
+        start1 = i+k;
+        start2 = n-1-k;
+      }
+      ll curr = up[i+k] * (ll)up[n-1-k];
+      sum += curr;
+      setmax<ll>(ans, sum);
+    }
+  }
+  cout << ans;
   return 0;
 }
+

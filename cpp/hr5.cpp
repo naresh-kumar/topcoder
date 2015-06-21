@@ -153,12 +153,30 @@ int nextInt() {
   }
 }
 
+bool cmp(pii a, pii b) {
+      return
+}
+
+
 int main() {
   //freopen("/Users/knaresh/codejam/codejam/in.txt", "r", stdin);
   //freopen("/Users/knaresh/codejam/codejam/out.txt", "w", stdout);
   //buffer_size = fread(buffer, 1, SIZE, stdin);
-  int tests = ss;
-  while(tests--) {
+  int n = ss;
+  vector<pii> points;
+  points.reserve(n);
+  rep(i, 0, n) {
+    points.push_back(mp(ss,ss));
   }
+  sort(all(points), );
+  int ans = 0;
+  pii last = mp(-1, -1);
+  rep(i, 0, n) {
+    if (points[i].first > last.first && points[i].second > last.second) {
+      ++ans;
+      last = points[i];
+    } else if (
+  }
+  cout << ans;
   return 0;
 }
