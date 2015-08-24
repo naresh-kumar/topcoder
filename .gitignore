@@ -1,5 +1,8 @@
 out/
 workspace.xml
 .idea/workspace.xml
+.idea/copyright/profiles_settings.xml
+.idea/misc.xml
+.idea/*
 cpp/a.out
 *.swp

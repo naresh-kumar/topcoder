@@ -87,9 +87,27 @@ const int MAX_INF = (1LL << 31) - 1;
 const int MIN_INF = (1LL << 31);
 int MOD = 1E+7 + 7;
 
+struct Data {
+  void add(int key, std::string tag) {
+    auto& vec = tags[key];
+    vec.push_back(tag);
+  }
+
+  void print(int key) {
+    printlist(tags[key]);
+  }
+  map<int, vs> tags;
+};
+
 int main() {
   int tests = si();
   while(tests--) {
+    Data data;
+    data.print(1);
+    data.add(1, "aa");
+    data.print(1);
+    data.add(1, "bb");
+    data.print(1);
   }
   return 0;
 }
