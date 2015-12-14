@@ -78,7 +78,10 @@ ll getNcr(int n, int r) { return factorial(n)/(factorial(r) * factorial(n-r)); }
 inline ll ipow(ll a, ll b, ll c = MOD) { ll r = 1; while(b) { if(b & 1) r = r*a % MOD; a = a*a % MOD; b >>= 1; } return r; }
 inline ll inver(ll a,ll c = MOD) { ll ans = ipow(a,MOD-2); return ans; }
 ll gcd(ll a, ll b) { return b == 0 ? a : gcd(b, a%b); }
-inline bool almost_equal(double x, double y, int ulp) { return std::abs(x-y) < std::numeric_limits<double>::epsilon() * std::abs(x+y) * ulp || std::abs(x-y) < std::numeric_limits<double>::min(); }
+inline bool almost_equal(double x, double y, int ulp = 4) {
+  return std::abs(x-y) < std::numeric_limits<double>::epsilon() * std::abs(x+y) * ulp
+    || std::abs(x-y) < std::numeric_limits<double>::min();
+}
 
 class PascalTriagle {
   public:
@@ -165,6 +168,32 @@ int MOD = 1E+7 + 7;
 int main() {
   int tests = si();
   while(tests--) {
+    int n = si();
+    map<pair<pii, int>, int> lineMap;
+    map<pii, int> countMap;
+    rep(i, 0, n) {
+      int a = si();
+      int b = si();
+      int c = si();
+      int ggcd = gcd(gcd(a, (b)), (c));
+      a /= ggcd;
+      b /= ggcd;
+      c /= ggcd;
+      auto line = make_pair(make_pair(a,b), c);
+      if (lineMap.find(line) == lineMap.end()) {
+        ggcd = gcd(a, (b));
+        auto angle = make_pair(a/ggcd, b/ggcd);
+        lineMap[line] = 1;
+        countMap[angle] += 1;
+      } else {
+        // ignore
+      }
+    }
+    int ans = 0;
+    for(auto angle : countMap) {
+      ans = max(ans, angle.second);
+    }
+    cout << ans << endl;
   }
   return 0;
 }

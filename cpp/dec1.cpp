@@ -165,6 +165,20 @@ int MOD = 1E+7 + 7;
 int main() {
   int tests = si();
   while(tests--) {
+    ll n1 = sll();
+    ll n2 = sll();
+    ll m = sll();
+    ll temp = min(n1, n2);
+    n2 = n1 + n2 - temp;
+    n1 = temp;
+    ll ans;
+    ll mm = m * (m + 1) / 2;
+    if (mm <= n1) {
+      ans = n1 + n2 - mm * 2;
+    } else {
+      ans = n2 - n1;
+    }
+    cout << ans << endl;
   }
   return 0;
 }

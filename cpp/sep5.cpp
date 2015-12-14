@@ -17,7 +17,6 @@
 #include <set>
 #include <sstream>
 #include <stack>
-#include <unordered_map>
 #include <vector>
 
 using namespace std;
@@ -46,7 +45,7 @@ typedef map<string, string> mss;
 
 // fast input
 #define gc getchar_unlocked
-template<class T> inline T readnum() { int i=gc(),f=1; for(;i<'0'||i>'9';i=gc()) if(i=='-') { f=-1;i=gc();break; } T ret = 0; for(;i>='0'&&i<='9';i=gc()) { ret = ret*10 + (i-'0'); } return f*ret; }
+template<class T> inline int readnum() { int i=gc(),f=1; for(;i<'0'||i>'9';i=gc()) if(i=='-') { f=-1;i=gc();break; } T ret = 0; for(;i>='0'&&i<='9';i=gc()) { ret = ret*10 + (i-'0'); } return f*ret; }
 inline int si() { return readnum<int>(); }
 inline ll sll() { return readnum<ll>(); }
 inline string ss() { string i=""; int c=gc(); while(c<'a'||c>'z') c=gc(); while(c>='a'&&c<='z') { i+=(char)c; c=gc(); } return i; }
@@ -55,7 +54,7 @@ inline string ss() { string i=""; int c=gc(); while(c<'a'||c>'z') c=gc(); while(
 inline void svector(vector<int>& v, int n) { v.reserve(n); rep(i,0,n) v.push_back(si()); }
 inline void sarray(int* v, int n) { rep(i,0,n) v[i] = si(); }
 template<class T> inline void println(T t) { cout << t << endl; }
-template<class T> inline void prints(T t, string s = " ") { cout << t << s; }
+template<class T> inline void prints(T t) { cout << t << " "; }
 template<class T> inline void print(T t) { cout << t; }
 template<class T> inline void printlist(T l) { iter(i,l) prints(i); cout << endl; }
 template<class T> inline void printlist(T *l, int n) { rep(i,0,n) prints(*(l+i)); cout << endl; }
@@ -78,83 +77,9 @@ ll getNcr(int n, int r) { return factorial(n)/(factorial(r) * factorial(n-r)); }
 inline ll ipow(ll a, ll b, ll c = MOD) { ll r = 1; while(b) { if(b & 1) r = r*a % MOD; a = a*a % MOD; b >>= 1; } return r; }
 inline ll inver(ll a,ll c = MOD) { ll ans = ipow(a,MOD-2); return ans; }
 ll gcd(ll a, ll b) { return b == 0 ? a : gcd(b, a%b); }
+int ncr[4][4];
+void pascalTriangle() { rep(i, 0, 4) rep(j, 0, i+1) { if (j==0 || j==i) ncr[i][j] = 1; else ncr[i][j] = (ncr[i-1][j-1] + (ll)ncr[i-1][j]) % MOD; } }
 inline bool almost_equal(double x, double y, int ulp) { return std::abs(x-y) < std::numeric_limits<double>::epsilon() * std::abs(x+y) * ulp || std::abs(x-y) < std::numeric_limits<double>::min(); }
-
-class PascalTriagle {
-  public:
-    PascalTriagle(int N) {
-      ncr = new int*[N];
-      for (int i = 0; i < N; ++i) {
-        ncr[i] = new int[N];
-      }
-      // maybe need init
-      rep(i, 0, N)
-        rep(j, 0, i+1) {
-          if (j==0 || j==i)
-            ncr[i][j] = 1;
-          else ncr[i][j] = (ncr[i-1][j-1] + (ll)ncr[i-1][j]) % MOD;
-        }
-    }
-
-  public:
-    int** ncr;
-};
-
-class SieveOfEratosthenes {
-  public:
-    SieveOfEratosthenes(int N) {
-      v = new bool[N];
-      memset(v, 0, N);
-      sp = new int[N];
-      // Pierre Dusart showed that if x > 598 then
-      int maxPrimes = N/log(N)*(1 + 1.2762/log(N));
-      primes = new int[maxPrimes];
-      count = 0;
-      primes[count++] = 2;
-      sp[1] = 1;
-      sp[2] = 2;
-      for (int i = 4; i < N; i += 2) {
-        v[i] = true;
-        sp[i] = 2;
-      }
-      for (int i = 3; i < N; i += 2) {
-        if (v[i] == false) { // found new prime
-          primes[count++] = i;
-          sp[i] = i;
-          for (ll j = i; (j*i) < N; j += 2) {
-            if (v[j*i] == false) {
-              v[j*i] = true;
-              sp[j*i] = i;
-            }
-          }
-        }
-      }
-    }
-
-    vector<pii> factors(int n) {
-      vector<pii> v;
-      int x = sp[n];
-      int count = 1;
-      n = n/x;
-      while (x > 1) {
-        int y = sp[n];
-        if (y != x) {
-          v.push_back(make_pair(x, count));
-          count = 0;
-        }
-        ++count;
-        x = y;
-        n = n/x;
-      }
-      return v;
-    }
-
-  public:
-    bool* v; // is composite
-    int* sp; // smallest prime
-    int* primes;
-    int count; // number of primes
-};
 
 // constants
 const double PI = 3.14159265358979323846;
@@ -162,10 +87,83 @@ const int MAX_INF = (1LL << 31) - 1;
 const int MIN_INF = (1LL << 31);
 int MOD = 1E+7 + 7;
 
-int main() {
-  int tests = si();
-  while(tests--) {
+struct Node {
+  Node* left;
+  Node* right;
+};
+
+void insert(Node* root, unsigned int value, int pos) {
+  if (pos == -1) return;
+  unsigned int bit = value & (1U<<pos);
+  if (bit == 0) {
+    if (root->left == nullptr) root->left = new Node();
+    insert(root->left, value, pos-1);
+  } else {
+    if (root->right == nullptr) root->right = new Node();
+    insert(root->right, value, pos-1);
   }
+}
+
+unsigned int getMax(Node* root, unsigned int value, int pos, unsigned int mxor, unsigned int ans) {
+  if (pos == -1) return ans;
+  unsigned int bit = value & (1U<<pos);
+  Node* next;
+  if (bit == 0) {
+    if (root->right != nullptr) {
+      next = root->right;
+      ans |= 1U<<pos;
+    } else {
+      next = root->left;
+    }
+  } else {
+    if (root->left != nullptr) {
+      next = root->left;
+      ans |= 1U<<pos;
+    } else {
+      next = root->right;
+    }
+  }
+  if (ans < (mxor & (~0U ^ ((1<<pos)-1)))) {
+    return 0;
+  }
+  return getMax(next, value, pos-1, mxor, ans);
+}
+unsigned int arr[400000], mleft[400000], mright[400000];
+int main() {
+  int n = si();
+  rep(i, 0, n) {
+    arr[i] = si();
+  }
+
+  int depth = 30;
+
+  auto root = new Node();
+  int xors = 0;
+  unsigned int mxor = 0;
+  insert(root, 0, depth);
+  rep(i, 0, n) {
+    xors = xors ^ arr[i];
+    mleft[i] = max(mxor, getMax(root, xors, depth, mxor, 0));
+    mxor = mleft[i];
+    insert(root, xors, depth);
+  }
+
+  root = new Node();
+  xors = 0;
+  mxor = 0;
+  insert(root, 0, depth);
+  rep(i, 0, n) {
+    xors = xors ^ arr[n-i-1];
+    mright[i] = max(mxor, getMax(root, xors, depth, mxor, 0));
+    mxor = mright[i];
+    insert(root, xors, depth);
+  }
+  ll ans = -1;
+  rep(i, 0, n-1) {
+    ll sum = (ll)mleft[i] + (ll)mright[n-i-2];
+    setmax(ans, sum);
+  }
+  printf("%lld\n", ans);
   return 0;
 }
 

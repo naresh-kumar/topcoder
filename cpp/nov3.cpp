@@ -103,6 +103,7 @@ class PascalTriagle {
 class SieveOfEratosthenes {
   public:
     SieveOfEratosthenes(int N) {
+      ++N;
       v = new bool[N];
       memset(v, 0, N);
       sp = new int[N];
@@ -131,24 +132,6 @@ class SieveOfEratosthenes {
       }
     }
 
-    vector<pii> factors(int n) {
-      vector<pii> v;
-      int x = sp[n];
-      int count = 1;
-      n = n/x;
-      while (x > 1) {
-        int y = sp[n];
-        if (y != x) {
-          v.push_back(make_pair(x, count));
-          count = 0;
-        }
-        ++count;
-        x = y;
-        n = n/x;
-      }
-      return v;
-    }
-
   public:
     bool* v; // is composite
     int* sp; // smallest prime
@@ -162,9 +145,44 @@ const int MAX_INF = (1LL << 31) - 1;
 const int MIN_INF = (1LL << 31);
 int MOD = 1E+7 + 7;
 
+ll bf(int n) {
+  ll sum = 0;
+  rep(i, 1, n+1) {
+    sum += n/gcd(i,n);
+  }
+  return sum;
+}
+
+const int MAX = 10000000;
+ll sol[MAX+1];
 int main() {
+  SieveOfEratosthenes sieve(MAX);
+  sol[0] = 0;
+  sol[1] = 1;
+  rep (i, 2, MAX+1) {
+    if (!sieve.v[i]) {
+      sol[i] = 1 + (i-1) * (ll)i;
+    } else {
+      int x = sieve.sp[i];
+      int y = sieve.sp[i/x];
+      sol[i] = sol[i/x];
+      int r = i/x;
+      int count = 1;
+      while (sieve.sp[r] == x) {
+        ++count;
+        r /= x;
+      }
+      ll p = i/r;
+      sol[i] += p * p/x * (x-1) * sol[r];
+    }
+  }
+
   int tests = si();
   while(tests--) {
+    int n = si();
+    printf("%lld\n", sol[n]);
+    //int n = tests+1;
+    //assert(bf(n) == sol[n]);
   }
   return 0;
 }

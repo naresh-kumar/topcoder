@@ -161,10 +161,68 @@ const double PI = 3.14159265358979323846;
 const int MAX_INF = (1LL << 31) - 1;
 const int MIN_INF = (1LL << 31);
 int MOD = 1E+7 + 7;
+const int MAX = 50001;
+int fre[MAX];
+int visited[MAX];
+
+struct Edge {
+  int t;
+  int id;
+};
+
+struct Node {
+  int id;
+  vector<Edge> edges;
+};
+
+int answer[MAX];
+int dfs(vector<Node>& graph, int id, int t) {
+  if (visited[id]) return id;
+  int m = id;
+  visited[id] = 1;
+  bool isFinal = true;
+  iter(e, graph[id].edges) {
+    if (e.t >= t) {
+      setmax(m, dfs(graph, e.id, e.t));
+    } else {
+      isFinal = false;
+    }
+  }
+  if (isFinal) setmax(answer[id], m);
+  return m;
+}
 
 int main() {
   int tests = si();
   while(tests--) {
+    int n = si();
+    int m = si();
+    memset(fre, 0, sizeof(fre));
+    memset(answer, 0, sizeof(answer));
+    rep(i, 0, n) fre[si()]++;
+    vector<Node> graph(MAX);
+    rep(i, 0, m) {
+      int t = si();
+      int a = si();
+      int b = si();
+      Edge bp = {t, b};
+      Edge ap = {t, a};
+      graph[a].edges.push_back(bp);
+      graph[b].edges.push_back(ap);
+    }
+    ll ans = 0;
+    ll count = 0;
+    rep(i, 1, MAX) {
+      if (fre[i]) {
+        if (answer[i]) {
+          ans += fre[i] * (ll) answer[i];
+        } else {
+          memset(visited, 0, sizeof(visited));
+          ans += fre[i] * (ll) dfs(graph, i, 1);
+        }
+      }
+    }
+    println(ans);
   }
   return 0;
 }

@@ -4,9 +4,9 @@
 
 using namespace std;
 
-int64_t getRealTime() {
-  return std::chrono::duration_cast<std::chrono::milliseconds>(
-      std::chrono::system_clock::now().time_since_epoch()).count();
+double getRealTime() {
+  return std::chrono::duration_cast<std::chrono::duration<int64_t, std::ratio<1l, 1000000l> > >(
+      std::chrono::system_clock::now().time_since_epoch()).count() / 1000000.0;
 }
 
 int64_t getMonotonicTime() {
@@ -15,13 +15,13 @@ int64_t getMonotonicTime() {
 }
 
 double getCurrentTime() {
-  return static_cast<std::chrono::duration<double> >(
+  return std::chrono::duration<double>(
       std::chrono::system_clock::now().time_since_epoch())
     .count();
 }
 
 int main() {
-  cout << "real time:      " << std::to_string(getRealTime()/1000.0) << endl;
+  cout << "real time:      " << std::to_string(getRealTime()) << endl;
   cout << "monotonic time: " << std::to_string(getMonotonicTime()) << endl;
   cout << "current time:   " << std::to_string(getCurrentTime()) << endl;
   unordered_map<int, int> kv;
@@ -29,5 +29,6 @@ int main() {
   kv[4] = 6;
   cout << kv.size() << endl;
   cout << kv[4] << endl;
+  cout << sizeof(bool) << endl;
   return 0;
 }

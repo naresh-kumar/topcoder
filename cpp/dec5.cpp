@@ -162,9 +162,55 @@ const int MAX_INF = (1LL << 31) - 1;
 const int MIN_INF = (1LL << 31);
 int MOD = 1E+7 + 7;
 
+void remove(ll& diff, ll& people) {
+  if (diff > 0) {
+    ll toBeRemoved = min(diff, people);
+    people -= toBeRemoved;
+    diff -= toBeRemoved;
+  }
+}
+
 int main() {
   int tests = si();
   while(tests--) {
+    ll n = sll();
+    ll m = sll();
+    ll z = sll();
+    ll l = sll();
+    ll r = sll();
+    ll b = sll();
+
+    ll armsRequired = b*2 + l + r;
+    ll seates = n * m;
+    ll arms = n * (m+1);
+
+    ll diff = armsRequired - arms;
+    if (diff > 0) {
+      ll toBeRemoved = min(diff/2, b);
+      b -= toBeRemoved;
+      diff -= toBeRemoved * 2;
+      if (diff > 0 && b > 0) { // handle odd diff
+        ll toBeRemoved = 1;
+        b -= toBeRemoved;
+        diff -= toBeRemoved * 2;
+      }
+    }
+
+    remove(diff, l);
+    remove(diff, r);
+
+    diff = z + l + r + b - seates;
+    remove(diff, b);
+    remove(diff, l);
+    remove(diff, r);
+    remove(diff, z);
+
+    if (m%2 == 0) {
+      ll bmax = n * m / 2;
+      b = min(b, bmax);
+    }
+
+    cout << z + l + r + b << endl;
   }
   return 0;
 }

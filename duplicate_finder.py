@@ -6,8 +6,8 @@ import numpy as np
 import cv2
 
 if len(sys.argv) < 3:
-    print "Usage: duplicate_finder.py <source> <target> [--skip_stat] [--delete]"
-    print "  Check if all image files in <source> are present in <target> or not."
+    print("Usage: duplicate_finder.py <source> <target> [--skip_stat] [--delete]")
+    print("  Check if all image files in <source> are present in <target> or not.")
     sys.exit()
 
 source_dir = sys.argv[1]
@@ -54,8 +54,8 @@ for root, subdirs, files in os.walk(target_dir):
             file_path = os.path.join(root, filename)
             target_files.append(file_path)
 
-print "Source files: ", len(source_files)
-print "Target files: ", len(target_files)
+print("Source files: %d" % len(source_files))
+print("Target files: %d" % len(target_files))
 match = 0
 mismatch = 0
 for source_file in source_files:
@@ -78,7 +78,7 @@ for source_file in source_files:
     if nomatch:
         print('\t- %s is not found' % (source_file))
 
-print "Source files: ", len(source_files)
-print "Target files: ", len(target_files)
-print "Total matches: ", match
-print "Total mismatches: ", mismatch
+print("Source files: %d" % len(source_files))
+print("Target files: %d" % len(target_files))
+print("Total matches: %d" % match)
+print("Total mismatches: %d" % mismatch)

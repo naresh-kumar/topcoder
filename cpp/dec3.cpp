@@ -165,6 +165,15 @@ int MOD = 1E+7 + 7;
 int main() {
   int tests = si();
   while(tests--) {
+    int n = si();
+    int ans = 101;
+    rep(i, 0, n) {
+      string s;
+      cin >> s;
+      int a = std::count(s.begin(), s.end(), 'a');
+      ans = min(ans, min(a, (int)s.length() - a));
+    }
+    cout << ans << endl;
   }
   return 0;
 }
