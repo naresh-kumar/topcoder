@@ -1,4 +1,5 @@
-//author Naresh
+// author Naresh
+// https://www.codechef.com/AUG15/problems/COOKMACH/
 #include <algorithm>
 #include <bitset>
 #include <cassert>
