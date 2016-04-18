@@ -1,4 +1,4 @@
-//author Naresh
+// Author: Naresh
 #include <algorithm>
 #include <bitset>
 #include <cassert>
@@ -44,21 +44,21 @@ typedef map<int, string> mis;
 typedef map<string, int> msi;
 typedef map<string, string> mss;
 
-// fast input
+// read
 #define gc getchar_unlocked
 template<class T> inline T readnum() { int i=gc(),f=1; for(;i<'0'||i>'9';i=gc()) if(i=='-') { f=-1;i=gc();break; } T ret = 0; for(;i>='0'&&i<='9';i=gc()) { ret = ret*10 + (i-'0'); } return f*ret; }
 inline int si() { return readnum<int>(); }
 inline ll sll() { return readnum<ll>(); }
-
-// read and write
+inline string ss() { static char buf[100000]; if(scanf("%s",buf)!=1) return ""; return buf; }
 inline void svector(vector<int>& v, int n) { v.reserve(n); rep(i,0,n) v.push_back(si()); }
 inline void sarray(int* v, int n) { rep(i,0,n) v[i] = si(); }
-template<class T> inline void println(T t) { cout << t << endl; }
-template<class T> inline void prints(T t, string s = " ") { cout << t << s; }
-template<class T> inline void print(T t) { cout << t; }
-template<class T> inline void printlist(T l) { iter(i,l) prints(i); cout << endl; }
-template<class T> inline void printlist(T *l, int n) { rep(i,0,n) prints(*(l+i)); cout << endl; }
-template<class T> inline void printmap(T m) { iter(i,m) { prints(i.first); prints(i.second); } cout << endl; }
+
+// debug write
+template<class T> inline void println(T t, string msg = "") { cerr <<  msg << " " << t << endl; }
+template<class T> inline void prints(T t, string s = " ") { cerr << t << s; }
+template<class T> inline void printlist(T l) { iter(i,l) prints(i); cerr << endl; }
+template<class T> inline void printlist(T *l, int n) { rep(i,0,n) prints(*(l+i)); cerr << endl; }
+template<class T> inline void printmap(T m) { iter(i,m) { prints(i.first); prints(i.second); } cerr << endl; }
 
 // general utils
 template<class T> inline void setmax(T &a, T b) { if(b > a) a = b; }
@@ -86,7 +86,6 @@ const double PI = 3.14159265358979323846;
 const int MAX_INT = (1LL << 31) - 1;
 const int MIN_INT = (1LL << 31);
 int MOD = 1E+7 + 7;
-#define DEBUG 1
 
 int main() {
   int tests = si();
