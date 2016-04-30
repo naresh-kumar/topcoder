@@ -5,5 +5,7 @@ workspace.xml
 .idea/misc.xml
 .idea/*
 cpp/a.out
+codejam/a.out
 *.swp
 tags
+.DS_Store
