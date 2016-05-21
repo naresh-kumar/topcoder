@@ -7,5 +7,6 @@ workspace.xml
 cpp/a.out
 codejam/a.out
 *.swp
+*.o
 tags
 .DS_Store
