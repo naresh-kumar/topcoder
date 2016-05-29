@@ -9,6 +9,7 @@
 #include <ctime>
 #include <iostream>
 #include <list>
+#include <limits.h>
 #include <map>
 #include <memory>
 #include <numeric>

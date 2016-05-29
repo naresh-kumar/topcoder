@@ -18,9 +18,10 @@
 #include <sstream>
 #include <stack>
 #include <unordered_map>
-#include <limits.h>
 #include <vector>
+#include <limits.h>
 #include "message.h"
+#include "oops.h"
 
 using namespace std;
 
@@ -98,6 +99,27 @@ pii NodeRange(ll n) {
 }
 
 int main() {
+  ll n = GetN();
+  pii range = NodeRange(n);
+  ll large = LLONG_MIN;
+  ll small = LLONG_MAX;
+  rep (i, range.first, range.second) {
+    ll curr = GetNumber(i);
+    setmax(large, curr);
+    setmin(small, curr);
+  }
+  PutLL(0, large);
+  PutLL(0, small);
+  Send(0);
+  if (IsFirst()) {
+    ll large = LLONG_MIN;
+    ll small = LLONG_MAX;
+    rep(i, 0, NumberOfNodes()) {
+      Receive(i);
+      setmax(large, GetLL(i));
+      setmin(small, GetLL(i));
+    }
+    cout << large - small << endl;
+  }
   return 0;
 }
-

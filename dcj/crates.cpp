@@ -21,6 +21,7 @@
 #include <limits.h>
 #include <vector>
 #include "message.h"
+#include "crates.h"
 
 using namespace std;
 
@@ -87,7 +88,7 @@ inline bool almost_equal(double x, double y, int ulp) { return std::abs(x-y) < s
 const double PI = 3.14159265358979323846;
 const int MAX_INT = (1LL << 31) - 1;
 const int MIN_INT = (1LL << 31);
-int MOD = 1E+7 + 7;
+int MOD = 1E+9 + 7;
 
 bool IsFirst() { return MyNodeId() == 0; }
 bool IsLast() { return MyNodeId() == NumberOfNodes() - 1; }
@@ -98,6 +99,31 @@ pii NodeRange(ll n) {
 }
 
 int main() {
+  if (IsFirst()) {
+    ll n = GetNumStacks();
+    vll v;
+    v.reserve(n);
+    rep(i, 0, n) {
+      v.push_back(GetStackHeight(i+1));
+    }
+    vll left;
+    left.reserve(n);
+    ll sum = 0;
+    rep(i, 0, n) {
+      sum += v[i];
+      left.push_back(sum);
+    }
+    ll total = left.back();
+    ll ans = 0;
+    ll base = total/n;
+    ll rem = total % n;
+    rep(i, 1, n) {
+      ll f = (i * base) + min((ll)i, rem);
+      ll diff = abs(f - left[i-1]) % MOD;
+      ans = (ans + diff) % MOD;
+    }
+    cout << ans << endl;
+  }
   return 0;
 }
 

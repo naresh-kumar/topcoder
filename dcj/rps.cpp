@@ -21,6 +21,7 @@
 #include <limits.h>
 #include <vector>
 #include "message.h"
+#include "rps.h"
 
 using namespace std;
 
@@ -91,13 +92,72 @@ int MOD = 1E+7 + 7;
 
 bool IsFirst() { return MyNodeId() == 0; }
 bool IsLast() { return MyNodeId() == NumberOfNodes() - 1; }
-pii NodeRange(ll n) {
-  int start = n * MyNodeId() / NumberOfNodes();
-  int end = n * (MyNodeId() + 1) / NumberOfNodes();
-  return {start, end};
+pii NodeRange(ll p) {
+  if (NumberOfNodes() <= 10 || p <= 10) {
+    if (IsFirst()) return {0, 1 << p};
+    return {0,0};
+  }
+  if (MyNodeId() < 64) {
+    ll n = 1LL << p;
+    int start = n * MyNodeId() / 64;
+    int end = n * (MyNodeId() + 1) / 64;
+    return {start, end};
+  } else {
+    return {0,0};
+  }
+}
+
+int winner(int id1, int id2) {
+  char l = GetFavoriteMove(id1);
+  char r = GetFavoriteMove(id2);
+  if (l == r) return id1;
+  if (l == 'R' && r == 'S') return id1;
+  if (l == 'S' && r == 'R') return id2;
+  if (l == 'S' && r == 'P') return id1;
+  if (l == 'P' && r == 'S') return id2;
+  if (l == 'P' && r == 'R') return id1;
+  if (l == 'R' && r == 'P') return id2;
+  return id1;
 }
 
 int main() {
+  ll p = GetN();
+  pii range = NodeRange(p);
+  if (range.first == range.second) {
+    PutInt(0, -1);
+    Send(0);
+  } else {
+    vi ans;
+    ans.reserve((range.second - range.first) / 2);
+    for (int i = range.first; i < range.second; i += 2)
+      ans.push_back(winner(i, i + 1));
+    ll n = ans.size();
+    while (n > 1) {
+      for (int i = 0; i < n; i += 2) {
+        ans[i / 2] = winner(ans[i], ans[i + 1]);
+      }
+      n = n / 2;
+    }
+    PutInt(0, ans[0]);
+    Send(0);
+  }
+  if (IsFirst()) {
+    vi ans;
+    rep(i, 0, NumberOfNodes()) {
+      Receive(i);
+      int id = GetInt(i);
+      if (id > -1) {
+        ans.push_back(id);
+      }
+    }
+    ll n = ans.size();
+    while (n > 1) {
+      for (int i = 0; i < n; i += 2) {
+        ans[i / 2] = winner(ans[i], ans[i + 1]);
+      }
+      n = n / 2;
+    }
+    cout << ans[0] << endl;
+  }
   return 0;
 }
-

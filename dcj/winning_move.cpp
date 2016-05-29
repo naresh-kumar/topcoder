@@ -21,6 +21,7 @@
 #include <limits.h>
 #include <vector>
 #include "message.h"
+#include "winning_move.h"
 
 using namespace std;
 
@@ -98,6 +99,25 @@ pii NodeRange(ll n) {
 }
 
 int main() {
+  if (IsFirst()) {
+    ll n = GetNumPlayers();
+    vll v;
+    rep(i, 0, n) {
+      v.push_back(GetSubmission(i));
+    }
+    sort(all(v));
+    int solved = 0;
+    for (ll i = 0; i < n; i++) {
+      if ((i == 0 || v[i - 1] != v[i]) &&
+          (i == n - 1 || v[i + 1] != v[i])) {
+        printf("%lld", v[i]);
+        solved = 1;
+        break;
+      }
+    }
+    if (!solved) {
+      printf("0\n");
+    }
+  }
   return 0;
 }
-
