@@ -10,3 +10,4 @@ codejam/a.out
 *.o
 tags
 .DS_Store
+a.out

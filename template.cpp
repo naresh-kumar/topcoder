@@ -60,12 +60,11 @@ template<class T> inline void prints(T t, string s = " ") { cerr << t << s; }
 template<class T> inline void printlist(T l) { iter(i,l) prints(i); cerr << endl; }
 template<class T> inline void printlist(T *l, int n) { rep(i,0,n) prints(*(l+i)); cerr << endl; }
 template<class T> inline void printmap(T m) { iter(i,m) { prints(i.first); prints(i.second); } cerr << endl; }
+template<class T> inline void printpair(T m, T n) { cerr << m << " " << n << endl; }
 
 // general utils
 template<class T> inline void setmax(T &a, T b) { if(b > a) a = b; }
 template<class T> inline void setmin(T &a, T b) { if(b < a) a = b; }
-template<class T> inline bool isInGrid(T i, T j, T n) { return i>=0 && i<n && j>=0 && j<n; }
-template<class T> inline bool isInside(T a, T b, T c) { return a > b && a < c; }
 template<class T> inline T reverse(T n) { T r = 0; while (n != 0) { r = r*10; r = r+n%10; n = n/10; } return r; }
 template<class T> inline int firstdigit(T n) { int r = 0; while (n != 0) { r = n%10; n = n/10; } return r; }
 template<class T> inline int digits(T n) { int r = 0; while (n != 0) { ++r; n /= 10; } return r; }
@@ -81,6 +80,8 @@ inline ll ipow(ll a, ll b, ll c = MOD) { ll r = 1; while(b) { if(b & 1) r = r*a 
 inline ll inver(ll a,ll c = MOD) { ll ans = ipow(a,MOD-2); return ans; }
 ll gcd(ll a, ll b) { return b == 0 ? a : gcd(b, a%b); }
 inline bool almost_equal(double x, double y, int ulp) { return std::abs(x-y) < std::numeric_limits<double>::epsilon() * std::abs(x+y) * ulp || std::abs(x-y) < std::numeric_limits<double>::min(); }
+#define counti __builtin_popcount
+#define countll __builtin_popcountll
 
 // constants
 const double PI = 3.14159265358979323846;
@@ -89,6 +90,8 @@ const int MIN_INT = (1LL << 31);
 int MOD = 1E+7 + 7;
 
 int main() {
+  //ios::sync_with_stdio(false);
+  //cin.tie(NULL);
   int tests = si();
   rep(t, 0, tests) {
     printf("Case #%d: ", t+1);

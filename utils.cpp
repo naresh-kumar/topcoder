@@ -22,17 +22,22 @@ class PascalTriagle {
 template<class T>
 class SegmentTree {
   public:
-    SegmentTree(n) {
+    SegmentTree(int n) : n(n) {
       height = (int)(ceil(log2(n))); //Height of segment tree
       max_size = 2*(int)pow(2, height)-1; //Maximum size of segment tree
-      memset(tree, 0, sizeof(tree));
-      memset(add, 0, sizeof(add));
-      memset(mul, 0, sizeof(mul));
+      tree = new int[max_size];
+      mul = new int[max_size];
+      add = new int[max_size];
+      val = new int[max_size];
+      memset(tree, 0, max_size * sizeof(T));
+      memset(add, 0, max_size * sizeof(T));
+      memset(mul, 0, max_size * sizeof(T));
+      memset(val, 0, max_size * sizeof(T));
     }
 
     // initialize tree with array.
     void initialize(T* arr) {
-      build_tree(1, 0, n-1, arr)
+      build_tree(1, 0, n-1, arr);
     }
 
     void build_tree(int node, int a, int b, T* arr) {
@@ -151,9 +156,10 @@ class SegmentTree {
     int n;
     int height;
     int max_size;
-    T tree[max_size];
-    T add[max_size];
-    T mul[max_size];
+    T* tree;
+    T* add;
+    T* mul;
+    T* val;
 };
 
 class SieveOfEratosthenes {
