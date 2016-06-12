@@ -71,7 +71,7 @@ template<class T> inline int digits(T n) { int r = 0; while (n != 0) { ++r; n /=
 inline int frequency(string& s, char c) { int r = 0; rep(i,0,s.length()) if (s[i] == c) ++r; return r; }
 
 // math utils
-extern int MOD;
+extern ll MOD;
 // multiply add mod
 template<class T> inline T mam(T a, T b, T c) { return ((a*b) % MOD + c) % MOD; }
 ll factorial(int x) { return (x < 2) ? 1 : x*factorial(x-1); }
@@ -87,7 +87,7 @@ inline bool almost_equal(double x, double y, int ulp) { return std::abs(x-y) < s
 const double PI = 3.14159265358979323846;
 const int MAX_INT = (1LL << 31) - 1;
 const int MIN_INT = (1LL << 31);
-int MOD = 1E+7 + 7;
+ll MOD = 1E+9 + 7;
 
 int main() {
   //ios::sync_with_stdio(false);
