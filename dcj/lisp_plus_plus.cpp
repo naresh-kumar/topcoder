@@ -21,7 +21,7 @@
 #include <limits.h>
 #include <vector>
 #include "message.h"
-#include "crates.h"
+#include "lisp_plus_plus.h"
 
 using namespace std;
 
@@ -88,7 +88,7 @@ inline bool almost_equal(double x, double y, int ulp) { return std::abs(x-y) < s
 const double PI = 3.14159265358979323846;
 const int MAX_INT = (1LL << 31) - 1;
 const int MIN_INT = (1LL << 31);
-int MOD = 1E+9 + 7;
+int MOD = 1E+7 + 7;
 
 bool IsFirst() { return MyNodeId() == 0; }
 bool IsLast() { return MyNodeId() == NumberOfNodes() - 1; }
@@ -99,53 +99,60 @@ pii NodeRange(ll n) {
 }
 
 int main() {
-  ll n = GetNumStacks();
-  pii range = NodeRange(n);
-  vll left;
-  left.reserve(range.second - range.first);
-  ll sum = 0;
-  rep(i, range.first, range.second) {
-    sum += GetStackHeight(i + 1);
-    left.push_back(sum);
+  ll n = GetLength();
+  ll diff = 0;
+  ll mind = MAX_INT;
+  ll nd = NumberOfNodes();
+  pii r = NodeRange(n);
+  rep (i, r.first, r.second) {
+    char c = GetCharacter(i);
+    if (c == '(')
+      ++diff;
+    else
+      --diff;
+    mind = min(diff, mind);
   }
-  ll lefts = 0;
-  if (!IsFirst()) {
-    Receive(MyNodeId()-1);
-    lefts = GetLL(MyNodeId()-1);
-  }
-  if (!IsLast()) {
-    PutLL(MyNodeId() + 1, lefts + sum);
-    Send(MyNodeId() + 1);
-  } else {
-    ll total = lefts + sum;
-    rep (i, 0, NumberOfNodes()) {
-      PutLL(i, total);
-      Send(i);
-    }
-  }
-  Receive(NumberOfNodes() -1);
-  ll total = GetLL(NumberOfNodes()-1);
-  ll ans = 0;
-  ll base = total / n;
-  ll rem = total % n;
-  rep(i, range.first, range.second) {
-    ll f = (i * base) + min((ll)i, rem);
-    ll act = lefts;
-    int lefti = i - 1 - range.first;
-    if (lefti >= 0) act += left[lefti];
-    ll diff = abs(f - act) % MOD;
-    ans = (ans + diff) % MOD;
-  }
-  PutLL(0,ans);
+//  PutLL(0, left);
+//  PutLL(0, right);
+  PutLL(0, diff);
+  PutLL(0, mind);
   Send(0);
   if (IsFirst()) {
-    ll ans = 0;
-    rep (i, 0, NumberOfNodes()) {
+    ll diff = 0;
+    ll seg = -1;
+    ll pre = 0;
+    rep(i, 0, nd) {
       Receive(i);
-      ans = (ans + GetLL(i)) % MOD;
+      ll currd = GetLL(i);
+      ll currmind = GetLL(i);
+      if (diff + currmind < 0 || diff + currd < 0) {
+        if (seg == -1) {
+          seg = i;
+          pre = diff;
+        }
+      }
+      diff += currd;
     }
-    if (ans < 0) ans += MOD;
-    cout << ans << endl;
+    if (seg == -1) {
+      if (diff == 0) {
+        cout << seg << endl;
+      } else {
+        cout << n << endl;
+      }
+    } else {
+      ll diff = pre;
+      int start = n * seg / NumberOfNodes();
+      int end = n * (seg + 1) / NumberOfNodes();
+      rep (i, start, end) {
+        char c = GetCharacter(i);
+        if (c == '(') ++diff;
+        else --diff;
+        if (diff < 0) {
+          cout << i << endl;
+          return 0;
+        }
+      }
+    }
   }
   return 0;
 }

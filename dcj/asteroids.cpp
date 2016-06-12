@@ -21,7 +21,7 @@
 #include <limits.h>
 #include <vector>
 #include "message.h"
-#include "crates.h"
+#include "asteroids.h"
 
 using namespace std;
 
@@ -88,7 +88,7 @@ inline bool almost_equal(double x, double y, int ulp) { return std::abs(x-y) < s
 const double PI = 3.14159265358979323846;
 const int MAX_INT = (1LL << 31) - 1;
 const int MIN_INT = (1LL << 31);
-int MOD = 1E+9 + 7;
+int MOD = 1E+7 + 7;
 
 bool IsFirst() { return MyNodeId() == 0; }
 bool IsLast() { return MyNodeId() == NumberOfNodes() - 1; }
@@ -98,54 +98,63 @@ pii NodeRange(ll n) {
   return {start, end};
 }
 
+int n,m;
+int game[1000][1000];
+ll dp[1000][1000];
+
+ll val(int i, int j) {
+  if (i >= 0 && i < n && j >= 0 && j < m) {
+    return game[i][j];
+  }
+  return MIN_INT;
+}
+
+ll vald(int i, int j) {
+  if (i >= 0 && i < n && j >= 0 && j < m) {
+    return dp[i][j];
+  }
+  return MIN_INT;
+}
+
 int main() {
-  ll n = GetNumStacks();
-  pii range = NodeRange(n);
-  vll left;
-  left.reserve(range.second - range.first);
-  ll sum = 0;
-  rep(i, range.first, range.second) {
-    sum += GetStackHeight(i + 1);
-    left.push_back(sum);
-  }
-  ll lefts = 0;
-  if (!IsFirst()) {
-    Receive(MyNodeId()-1);
-    lefts = GetLL(MyNodeId()-1);
-  }
-  if (!IsLast()) {
-    PutLL(MyNodeId() + 1, lefts + sum);
-    Send(MyNodeId() + 1);
-  } else {
-    ll total = lefts + sum;
-    rep (i, 0, NumberOfNodes()) {
-      PutLL(i, total);
-      Send(i);
-    }
-  }
-  Receive(NumberOfNodes() -1);
-  ll total = GetLL(NumberOfNodes()-1);
-  ll ans = 0;
-  ll base = total / n;
-  ll rem = total % n;
-  rep(i, range.first, range.second) {
-    ll f = (i * base) + min((ll)i, rem);
-    ll act = lefts;
-    int lefti = i - 1 - range.first;
-    if (lefti >= 0) act += left[lefti];
-    ll diff = abs(f - act) % MOD;
-    ans = (ans + diff) % MOD;
-  }
-  PutLL(0,ans);
-  Send(0);
   if (IsFirst()) {
-    ll ans = 0;
-    rep (i, 0, NumberOfNodes()) {
-      Receive(i);
-      ans = (ans + GetLL(i)) % MOD;
+    n = GetHeight();
+    m = GetWidth();
+    rep (i, 0, n) rep (j, 0, m) {
+      char c = GetPosition(i, j);
+      if (c == '#') game[i][j] = MIN_INT;
+      else game[i][j] = c - '0';
     }
-    if (ans < 0) ans += MOD;
+    rep(i, 0, m) {
+      dp[0][i] = game[0][i];
+    }
+    rep(i, 1, n) rep (j, 0, m) {
+      if (game[i][j] >= 0) {
+        ll ans = game[i][j] + vald(i-1, j);
+        ans = max(ans, vald(i-1,j-1) + val(i-1,j) + game[i][j]);
+        ans = max(ans, vald(i-1,j+1) + val(i-1,j) + game[i][j]);
+        dp[i][j] = ans;
+      } else {
+        dp[i][j] = game[i][j];
+      }
+    }
+//    irep (i, n-1, 0) {
+//      printlist(game[i], m);
+//    }
+//    irep (i, n-1, 0) {
+//      printlist(dp[i], m);
+//    }
+    ll ans = MIN_INT;
+    rep (j, 0, m) {
+      ans = max(ans, dp[n-1][j]);
+      ans = max(ans, dp[n-1][j] + val(n-1, j-1));
+      ans = max(ans, dp[n-1][j] + val(n-1, j+1));
+    }
+    if (ans < 0) {
+      ans = -1;
+    }
     cout << ans << endl;
   }
   return 0;
 }
+

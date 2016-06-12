@@ -21,7 +21,7 @@
 #include <limits.h>
 #include <vector>
 #include "message.h"
-#include "crates.h"
+#include "again.h"
 
 using namespace std;
 
@@ -88,7 +88,7 @@ inline bool almost_equal(double x, double y, int ulp) { return std::abs(x-y) < s
 const double PI = 3.14159265358979323846;
 const int MAX_INT = (1LL << 31) - 1;
 const int MIN_INT = (1LL << 31);
-int MOD = 1E+9 + 7;
+int MOD = 1000000007;
 
 bool IsFirst() { return MyNodeId() == 0; }
 bool IsLast() { return MyNodeId() == NumberOfNodes() - 1; }
@@ -99,53 +99,53 @@ pii NodeRange(ll n) {
 }
 
 int main() {
-  ll n = GetNumStacks();
-  pii range = NodeRange(n);
-  vll left;
-  left.reserve(range.second - range.first);
-  ll sum = 0;
-  rep(i, range.first, range.second) {
-    sum += GetStackHeight(i + 1);
-    left.push_back(sum);
+  ll suma = 0;
+  ll sumb = 0;
+  ll n = GetN();
+  pii r = NodeRange(n);
+  int nd = NumberOfNodes();
+  ll mina[nd];
+  ll minb[nd];
+  rep (i, 0, nd) mina[i] = 0;
+  rep (i, 0, nd) minb[i] = 0;
+  rep (i, r.first, r.second) {
+    suma = (suma + GetA(i)) % MOD;
+    sumb = (sumb + GetB(i)) % MOD;
+    int ii = i % nd;
+    mina[ii] = (mina[ii] + GetA(i)) % MOD;
+    minb[ii] = (minb[ii] + GetB(i)) % MOD;
   }
-  ll lefts = 0;
-  if (!IsFirst()) {
-    Receive(MyNodeId()-1);
-    lefts = GetLL(MyNodeId()-1);
+  PutLL(0, suma);
+  PutLL(0, sumb);
+  rep (i, 0, nd) {
+    PutLL(0, mina[i]);
+    PutLL(0, minb[i]);
   }
-  if (!IsLast()) {
-    PutLL(MyNodeId() + 1, lefts + sum);
-    Send(MyNodeId() + 1);
-  } else {
-    ll total = lefts + sum;
-    rep (i, 0, NumberOfNodes()) {
-      PutLL(i, total);
-      Send(i);
-    }
-  }
-  Receive(NumberOfNodes() -1);
-  ll total = GetLL(NumberOfNodes()-1);
-  ll ans = 0;
-  ll base = total / n;
-  ll rem = total % n;
-  rep(i, range.first, range.second) {
-    ll f = (i * base) + min((ll)i, rem);
-    ll act = lefts;
-    int lefti = i - 1 - range.first;
-    if (lefti >= 0) act += left[lefti];
-    ll diff = abs(f - act) % MOD;
-    ans = (ans + diff) % MOD;
-  }
-  PutLL(0,ans);
   Send(0);
   if (IsFirst()) {
-    ll ans = 0;
-    rep (i, 0, NumberOfNodes()) {
+    suma = 0;
+    sumb = 0;
+    ll mina[nd];
+    ll minb[nd];
+    rep (i, 0, nd) mina[i] = 0;
+    rep (i, 0, nd) minb[i] = 0;
+    rep (i, 0, nd) {
       Receive(i);
-      ans = (ans + GetLL(i)) % MOD;
+      suma = (suma + GetLL(i)) % MOD;
+      sumb = (sumb + GetLL(i)) % MOD;
+      rep (j, 0, nd) {
+        mina[j] = (mina[j] + GetLL(i)) % MOD;
+        minb[j] = (minb[j] + GetLL(i)) % MOD;
+      }
+    }
+    ll ans = (suma * sumb) % MOD;
+    ans = (ans - (mina[0] * minb[0]) % MOD) % MOD;
+    rep (i, 1, nd) {
+      ans = (ans - (mina[i] * minb[nd-i]) % MOD) % MOD;
     }
     if (ans < 0) ans += MOD;
     cout << ans << endl;
   }
   return 0;
 }
+
