@@ -36,7 +36,7 @@ ll MOD = 1E+9 + 7;
 
 template <class T> T reverse(T n) { T r = 0; while (n != 0) { r = r * 10; r = r + n % 10; n = n / 10; } return r; }
 template <class T> int firstdigit(T n) { int r = 0; while (n != 0) { r = n % 10; n = n / 10; } return r; }
-template <class T> int digits(T n) { int r = 0; while (n != 0) { ++r; n /= 10; } return r; }
+int digits(ll n) { if (n) return log10(abs(n)) + 1; return 0; }
 int frequency(string& s, char c) { int r = 0; rep(i, 0, s.length()) if (s[i] == c)++ r; return r; }
 // multiply add mod
 template <class T> T mam(T a, T b, T c) { return ((a * b) % MOD + c) % MOD; }

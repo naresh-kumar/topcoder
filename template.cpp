@@ -20,26 +20,29 @@
 #include <vector>
 
 using namespace std;
+typedef long long ll;
 
 #define all(a) a.begin(), a.end()
 #define rep(i, a, b) for (int i = (a); i < (b); ++i)
 #define irep(i, a, b) for (int i = (a); i >= (b); --i)
-#define iter(i, v) for (auto &i : (v))
 
-typedef long long ll;
+// Stream operators for std::pair
+template<class F, class S> ostream& operator<<(ostream& os, const pair<F,S>& p) { return os << p.first << ":" << p.second; }
+template<class F, class S> istream& operator>>(istream& is, pair<F,S>& p) { return is >> p.first >> p.second; }
 
-template <class T> void print(T t, string s = "\n") { cerr << t << s; }
-template <class T> void printpair(T p) { print(p.first, "->"); print(p.second); }
-template <class T> void printlist(T l) { iter(i, l) print(i, " "); cerr << endl; }
-template <class T> void printlist(T *l, int n) { rep(i, 0, n) print(*(l + i), " "); cerr << endl; }
-template <class T> void printmap(T m) { iter(i, m) { printpair(i); } cerr << endl; }
+// Debug write to stderr
+template <class T> void print(T& t, string s = "") { cerr << "    " << t << s; }
+template <class T> void printlist(T& l, int n, string s = "") { rep(i,0,n) print(l[i], s); print("\n"); }
+template <class T> void printmap(T& m, string s = "") { for(auto& i : m) { print(i, s); } print("\n"); }
 
-int si() { int x; scanf("%d", &x); return x; }
-int sll() { ll x; scanf("%lld", &x); return x; }
-double sf() { double x; scanf("%lf", &x); return x; }
-string ss(int n = 1000) { char buf[n+1]; scanf("%s", buf); return buf; }
-void svector(vector<int> &v, int n) { rep(i, 0, n) v.push_back(si()); }
-void sarray(int *v, int n) { rep(i, 0, n) v[i] = si(); }
+// Input from stdin
+#define sint(x) int x; cin >> x
+#define sdouble(x) double x; cin >> x
+#define slong(x) ll x; cin >> x
+#define sstring(x) string x; cin >> x
+template <class T> void sarray(T& v, int n) { rep(i, 0, n) { cin >> v[i]; } }
+template <class T> void sgrid(T& v, int r, int c) { rep(i, 0, r) rep(j, 0, c) { cin >> v[i][j]; } }
+
 template <class T> void chmin(T &a, T b) { if (b < a) a = b; }
 template <class T> void chmax(T &a, T b) { if (b > a) a = b; }
 
@@ -47,11 +50,13 @@ void solve() {
 }
 
 int main() {
-  int tests = si();
+  ios_base::sync_with_stdio(0);
+  cin.tie(0);
+  sint(tests);
   rep(t, 0, tests) {
-    printf("Case #%d: ", t + 1);
+    cout << "Case #" << t + 1 << ": ";
     solve();
-    printf("\n");
+    cout << "\n";
   }
   return 0;
 }
