@@ -39,67 +39,78 @@ template <class T> void printmap(T& m, string s = "") { for(auto& i : m) { print
 template <class T> void chmin(T &a, T b) { if (b < a) a = b; }
 template <class T> void chmax(T &a, T b) { if (b > a) a = b; }
 
-bool IsFirst() { return MyNodeId() == 0; }
-bool IsLast() { return MyNodeId() == NumberOfNodes() - 1; }
-int Next() { return MyNodeId() + 1; }
-int Previous() { return MyNodeId() - 1; }
-pair<int, int> MyRange(ll n) {
-  int start = n * MyNodeId() / NumberOfNodes();
-  int end = n * (MyNodeId() + 1) / NumberOfNodes();
-  return {start, end};
-}
+template <class T> void Put(int to, T value);
+template <class T> void Put(int to, vector<T>& list);
+template<> void Put<ll>(int to, ll value) { PutLL(to, value); Send(to); }
+template<> void Put<int>(int to, int value) { PutInt(to, value); Send(to); }
+template<> void Put<char>(int to, char value) { PutChar(to, value); Send(to); }
+template<> void Put<ll>(int to, vector<ll>& list) { for(auto value : list) PutLL(to, value); Send(to); }
+template<> void Put<int>(int to, vector<int>& list) { for(auto value : list) PutInt(to, value); Send(to); }
+template<> void Put<char>(int to, vector<char>& list) { for(auto value : list) PutChar(to, value); Send(to); }
+
+template <class T> T Get(int from);
+template<> ll Get<ll>(int from) { Receive(from); return GetLL(from); }
+template<> int Get<int>(int from) { Receive(from); return GetInt(from); }
+template<> char Get<char>(int from) { Receive(from); return GetChar(from); }
+
+class Node {
+ public:
+  Node(ll range) {
+    id = MyNodeId();
+    start = range * MyNodeId() / NumberOfNodes();
+    end = range * (MyNodeId() + 1) / NumberOfNodes();
+    size = end - start;
+    is_first = id == 0;
+    is_last = id == NumberOfNodes() - 1;
+    next = id + 1;
+    previous = id - 1;
+  }
+  int id, start, end, size, previous, next, is_first, is_last;
+};
 
 #include "crates.h"
 
 int main() {
-  auto n = GetNumStacks();
-  auto range = MyRange(n);
-  vector<ll> csum(range.second-range.first, 0);
+  ll n = GetNumStacks();
+  Node node(n);
+  vector<ll> csum(node.size, 0);
   ll sum = 0;
-  rep(i, range.first, range.second) {
+  rep(i, node.start, node.end) {
     sum += GetStackHeight(i+1);
-    csum[i-range.first] = sum;
+    csum[i-node.start] = sum;
   }
   ll offset = 0;
-  if (IsFirst()) {
-    PutLL(Next(), sum);
-    Send(Next());
-  } else if(not IsLast()) {
-    Receive(Previous());
-    offset = GetLL(Previous());
-    PutLL(Next(), sum + offset);
-    Send(Next());
+  if (node.is_first) {
+    Put(node.next, sum);
+  } else if(not node.is_last) {
+    offset = Get<ll>(node.previous);
+    Put(node.next, sum + offset);
   } else {
-    Receive(Previous());
-    offset = GetLL(Previous());
+    offset = Get<ll>(node.previous);
     rep(i, 0, NumberOfNodes()) {
-      PutLL(i, offset + sum);
-      Send(i);
+      Put(i, offset + sum);
     }
   }
-  Receive(NumberOfNodes()-1);
-  ll total = GetLL(NumberOfNodes() - 1);
+  ll total = Get<ll>(NumberOfNodes() -1);
 
   ll ans = 0;
   ll base = total / n;
   ll rem = total % n;
   ll MOD = 1000000007;
-  rep(i, range.first, range.second) {
+  rep(i, node.start, node.end) {
     ll f = (i * base) + min((ll)i, rem);
     ll curr = offset;
-    if (i > range.first) {
-      curr += csum[i - range.first - 1];
+    if (i > node.start) {
+      curr += csum[i - node.start - 1];
     }
     ll diff = abs(f - curr) % MOD;
     ans = (ans + diff) % MOD;
   }
-  PutLL(0, ans);
-  Send(0);
-  if (IsFirst()) {
+  Put(0, ans);
+  if (node.is_first) {
     ll ans = 0;
     rep(i, 0, NumberOfNodes()) {
-      Receive(i);
-      ans = (ans + GetLL(i)) % MOD;
+      ans = (ans + Get<ll>(i)) % MOD;
     }
     cout << ans << endl;
   }

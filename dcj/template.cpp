@@ -39,16 +39,36 @@ template <class T> void printmap(T& m, string s = "") { for(auto& i : m) { print
 template <class T> void chmin(T &a, T b) { if (b < a) a = b; }
 template <class T> void chmax(T &a, T b) { if (b > a) a = b; }
 
-bool IsFirst() { return MyNodeId() == 0; }
-bool IsLast() { return MyNodeId() == NumberOfNodes() - 1; }
-int Next() { return MyNodeId() + 1; }
-int Previous() { return MyNodeId() - 1; }
-pair<int, int> MyRange(ll n) {
-  int start = n * MyNodeId() / NumberOfNodes();
-  int end = n * (MyNodeId() + 1) / NumberOfNodes();
-  return {start, end};
-}
+template <class T> void Put(int to, T value);
+template <class T> void Put(int to, vector<T>& list);
+template<> void Put<ll>(int to, ll value) { PutLL(to, value); Send(to); }
+template<> void Put<int>(int to, int value) { PutInt(to, value); Send(to); }
+template<> void Put<char>(int to, char value) { PutChar(to, value); Send(to); }
+template<> void Put<ll>(int to, vector<ll>& list) { for(auto value : list) PutLL(to, value); Send(to); }
+template<> void Put<int>(int to, vector<int>& list) { for(auto value : list) PutInt(to, value); Send(to); }
+template<> void Put<char>(int to, vector<char>& list) { for(auto value : list) PutChar(to, value); Send(to); }
+
+template <class T> T Get(int from);
+template<> ll Get<ll>(int from) { Receive(from); return GetLL(from); }
+template<> int Get<int>(int from) { Receive(from); return GetInt(from); }
+template<> char Get<char>(int from) { Receive(from); return GetChar(from); }
+
+class Node {
+ public:
+  Node(ll range) {
+    id = MyNodeId();
+    start = range * MyNodeId() / NumberOfNodes();
+    end = range * (MyNodeId() + 1) / NumberOfNodes();
+    size = end - start;
+    is_first = id == 0;
+    is_last = id == NumberOfNodes() - 1;
+    next = id + 1;
+    previous = id - 1;
+  }
+  int id, start, end, size, previous, next, is_first, is_last;
+};
 
 int main() {
+  Node node(0);
   return 0;
 }
