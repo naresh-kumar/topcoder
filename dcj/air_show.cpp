@@ -19,6 +19,7 @@
 #include <unordered_set>
 #include <vector>
 #include "message.h"
+#include "air_show.h"
 
 using namespace std;
 typedef long long ll;
@@ -30,11 +31,20 @@ typedef __int128 bigint;
 
 // Stream operators for std::pair
 template<class F, class S> ostream& operator<<(ostream& os, const pair<F,S>& p) { return os << p.first << ":" << p.second; }
+template<class F, class S> istream& operator>>(istream& is, pair<F,S>& p) { return is >> p.first >> p.second; }
 
 // Debug write to stderr
 template <class T> void print(T& t, string s = "") { cerr << "    " << t << s; }
 template <class T> void printlist(T& l, int n, string s = "") { rep(i,0,n) print(l[i], s); print("\n"); }
 template <class T> void printmap(T& m, string s = "") { for(auto& i : m) { print(i, s); } print("\n"); }
+
+// Input from stdin
+#define sint(x) int x; cin >> x
+#define sdouble(x) double x; cin >> x
+#define slong(x) ll x; cin >> x
+#define sstring(x) string x; cin >> x
+template <class T> void sarray(T& v, int n) { rep(i, 0, n) { cin >> v[i]; } }
+template <class T> void sgrid(T& v, int r, int c) { rep(i, 0, r) rep(j, 0, c) { cin >> v[i][j]; } }
 
 template <class T> void chmin(T &a, T b) { if (b < a) a = b; }
 template <class T> void chmax(T &a, T b) { if (b > a) a = b; }
@@ -49,59 +59,39 @@ pair<int, int> MyRange(ll n) {
   return {start, end};
 }
 
-#include "crates.h"
-
-int main() {
-  auto n = GetNumStacks();
-  auto range = MyRange(n);
-  vector<ll> csum(range.second-range.first, 0);
-  ll sum = 0;
-  rep(i, range.first, range.second) {
-    sum += GetStackHeight(i+1);
-    csum[i-range.first] = sum;
-  }
-  ll offset = 0;
-  if (IsFirst()) {
-    PutLL(Next(), sum);
-    Send(Next());
-  } else if(not IsLast()) {
-    Receive(Previous());
-    offset = GetLL(Previous());
-    PutLL(Next(), sum + offset);
-    Send(Next());
-  } else {
-    Receive(Previous());
-    offset = GetLL(Previous());
-    rep(i, 0, NumberOfNodes()) {
-      PutLL(i, offset + sum);
-      Send(i);
-    }
-  }
-  Receive(NumberOfNodes()-1);
-  ll total = GetLL(NumberOfNodes() - 1);
-
+void Small() {
+  auto range = MyRange(GetNumSegments() - 1); // 0 ot n-2
+  ll safe_dist = GetSafeDistance() * GetSafeDistance();
   ll ans = 0;
-  ll base = total / n;
-  ll rem = total % n;
-  ll MOD = 1000000007;
-  rep(i, range.first, range.second) {
-    ll f = (i * base) + min((ll)i, rem);
-    ll curr = offset;
-    if (i > range.first) {
-      curr += csum[i - range.first - 1];
+  rep(i, range.first + 1, range.second + 1) {
+    ll p1 = GetPosition(0, i);
+    ll y1 = p1 >> 20;
+    ll z1 = p1 - (y1 << 20);
+
+    ll p2 = GetPosition(1, i);
+    ll y2 = p2 >> 20;
+    ll z2 = p2 - (y2 << 20);
+    ll dist = (z2 - z1) * (z2 - z1) + (y1 - y2) * (y1 - y2);
+    if (dist < safe_dist) {
+      ++ans;
     }
-    ll diff = abs(f - curr) % MOD;
-    ans = (ans + diff) % MOD;
   }
   PutLL(0, ans);
   Send(0);
   if (IsFirst()) {
-    ll ans = 0;
-    rep(i, 0, NumberOfNodes()) {
+    ans = 0;
+    rep (i, 0, NumberOfNodes()) {
       Receive(i);
-      ans = (ans + GetLL(i)) % MOD;
+      ans += GetLL(i);
     }
-    cout << ans << endl;
+    cout << ans <<  " " << ans << endl;
   }
-  return 0;
+}
+
+void Large() {
+  // TODO
+}
+
+int main() {
+  Small();
 }
