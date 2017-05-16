@@ -20,11 +20,12 @@
 #include <vector>
 
 using namespace std;
-typedef long long ll;
+typedef int64_t ll;
+typedef __int128 bigint;
 
 #define all(a) a.begin(), a.end()
-#define rep(i, a, b) for (int i = (a); i < (b); ++i)
-#define irep(i, a, b) for (int i = (a); i >= (b); --i)
+#define rep(i, a, b) for (ll i = (a); i < (b); ++i)
+#define irep(i, a, b) for (ll i = (a); i >= (b); --i)
 
 // Stream operators for std::pair
 template<class F, class S> ostream& operator<<(ostream& os, const pair<F,S>& p) { return os << p.first << ":" << p.second; }
@@ -46,9 +47,7 @@ template <class T> void sgrid(T& v, int r, int c) { rep(i, 0, r) rep(j, 0, c) { 
 template <class T> void chmin(T &a, T b) { if (b < a) a = b; }
 template <class T> void chmax(T &a, T b) { if (b > a) a = b; }
 
-void solve() {
-}
-
+void solve();
 int main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
@@ -60,3 +59,9 @@ int main() {
   }
   return 0;
 }
+
+/*************************** Code starts here *********************************/
+
+void solve() {
+}
+
