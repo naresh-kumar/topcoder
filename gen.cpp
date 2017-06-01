@@ -41,18 +41,24 @@ double randreal(double l, double u) {
 
 int main() {
   srand(time(0));
-  int t = 10;
-  println(t);
-  rep(i, 0, t) {
-    prints(200000);
-    println(50000);
-    rep(i, 0, 200000) {
-      prints(randint(50000)+1);
-    }
-    cout << endl;
-    rep(i, 0, 50000) {
-      printf("%d %d %d\n", i+1, randint(50000)+1, randint(50000)+1);
-    }
+  int n = 100000;
+  int mm = 1000000;
+  println(n);
+  rep(i, 0, n) {
+    prints(randint(2, mm));
+  }
+  println("");
+  int q = n;
+  println(q);
+  rep(i, 0, q) {
+    int l = randint(1, n-1);
+    int r = randint(l+1, n);
+    int x = randint(1, mm-1);
+    int y = randint(x, mm);
+    prints(l);
+    prints(r);
+    prints(x);
+    println(y);
   }
   return 0;
 }

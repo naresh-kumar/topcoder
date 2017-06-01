@@ -20,29 +20,32 @@
 #include <vector>
 
 using namespace std;
+typedef int64_t ll;
+typedef __int128 bigint;
 
 #define all(a) a.begin(), a.end()
-#define rep(i, a, b) for (int i = (a); i < (b); ++i)
-#define irep(i, a, b) for (int i = (a); i >= (b); --i)
-#define iter(i, v) for (auto& i : (v))
-
-typedef long long ll;
+#define rep(i, a, b) for (ll i = (a); i < (b); ++i)
+#define irep(i, a, b) for (ll i = (a); i >= (b); --i)
 
 ///////////////////////////////////////////////////////////////////////////////
+
+int dx[] =  {-1, -1, 0, 1, 1,  1,  0, -1};
+int dy[] =  { 0,  1, 1, 1, 0, -1, -1, -1};
 
 // constants
 const double PI = 3.141592653589793238463;
 ll MOD = 1E+9 + 7;
 
-template <class T> T reverse(T n) { T r = 0; while (n != 0) { r = r * 10; r = r + n % 10; n = n / 10; } return r; }
-template <class T> int firstdigit(T n) { int r = 0; while (n != 0) { r = n % 10; n = n / 10; } return r; }
-int digits(ll n) { if (n) return log10(abs(n)) + 1; return 0; }
-int frequency(string& s, char c) { int r = 0; rep(i, 0, s.length()) if (s[i] == c)++ r; return r; }
-// multiply add mod
-template <class T> T mam(T a, T b, T c) { return ((a * b) % MOD + c) % MOD; }
-ll factorial(int x) { return (x < 2) ? 1 : x * factorial(x - 1); }
-ll ncr(int n, int r) { return factorial(n) / (factorial(r) * factorial(n - r)); }
+ll reverse(ll n) { ll r = 0; while (n != 0) { r = r * 10; r = r + n % 10; n = n / 10; } return r; }
+int firstdigit(ll n) { int r = 0; while (n != 0) { r = n % 10; n = n / 10; } return r; }
+int digits(ll n) { return n ? log10(abs(n)) + 1 : 0; }
+int frequency(string& s, char c) { int r = 0; rep(i, 0, s.length()) if (s[i] == c) ++r; return r; }
+// add multiply mod
+ll amm(ll a, ll b, ll c = 1) { return ((c * b) % MOD + a) % MOD; }
+ll factorial(ll x) { return (x < 2) ? 1 : x * factorial(x - 1); }
+ll ncr(ll n, ll r) { return factorial(n) / (factorial(r) * factorial(n - r)); }
 ll ipow(ll a, ll b, ll c = MOD) { ll r = 1; while (b) { if (b & 1) r = r * a % MOD; a = a * a % MOD; b >>= 1; } return r; }
+ll mpow(ll e, ll b = 10) { ll r = 1; while (e) { if (e & 1) r = (r * b) % MOD; e >>= 1; b = (b * b) % MOD; } return r; }
 ll inver(ll a, ll c = MOD) { ll ans = ipow(a, MOD - 2); return ans; }
 ll gcd(ll a, ll b) { return b == 0 ? a : gcd(b, a % b); }
 
@@ -54,35 +57,32 @@ bool almost_equal(double x, double y, int ulp = 4) {
 // To get ncr % MOD using PascalTriagle
 class PascalTriagle {
  public:
-  int** ncr;
+  vector<vector<int>> ncr;
   PascalTriagle(int N) {
-    ncr = new int*[N];
-    for (int i = 0; i < N; ++i) {
-      ncr[i] = new int[N];
-    }
-    // maybe need init
-    for (int i = 0; i < N; ++i)
-      for (int j = 0; j < i + 1; ++j)
+    ncr.resize(N);
+    rep (i, 0, N) ncr[i].resize(N);
+    rep (i, 0, N)
+      rep (j, 0, i + 1) {
         if (j == 0 || j == i)
           ncr[i][j] = 1;
         else
           ncr[i][j] = (ncr[i - 1][j - 1] + (ll)ncr[i - 1][j]) % MOD;
+    }
   }
 };
 
 class SieveOfEratosthenes {
  public:
-  bool* v;  // is composite
-  int* sp;  // smallest prime
-  int* primes;
+  vector<bool> v; // is composite
+  vector<int> sp;
+  vector<int> primes;
   int count;  // number of primes
   SieveOfEratosthenes(int N) {
-    v = new bool[N];
-    memset(v, 0, N);
-    sp = new int[N];
+    v.resize(N, false);
+    sp.resize(N);
     // Pierre Dusart showed that if x > 598 then
-    int maxPrimes = N / log(N) * (1 + 1.2762 / log(N));
-    primes = new int[maxPrimes];
+    int max_primes = N / log(N) * (1 + 1.2762 / log(N));
+    primes.resize(max_primes);
     count = 0;
     primes[count++] = 2;
     sp[1] = 1;

@@ -32,16 +32,17 @@ template<class F, class S> ostream& operator<<(ostream& os, const pair<F,S>& p) 
 template<class F, class S> istream& operator>>(istream& is, pair<F,S>& p) { return is >> p.first >> p.second; }
 
 // Debug write to stderr
-template <class T> void print(T& t, string s = "") { cerr << "    " << t << s; }
-template <class T> void printlist(T& l, int n, string s = "") { rep(i,0,n) print(l[i], s); print("\n"); }
-template <class T> void printmap(T& m, string s = "") { for(auto& i : m) { print(i, s); } print("\n"); }
+template <class T> void print(T& v, string s = "\n") { cerr << v << s; }
+template <class T> void printlist(T& l, int n) { rep(i,0,n) print(l[i], " "); print(""); }
+template <class T> void printgrid(T& g, int n, int m) { rep(i,0,n) { printlist(g[i], m); } }
+template <class T> void printmap(T& m) { for(auto& i : m) { print(i, " "); } print(""); }
 
 // Input from stdin
 #define sint(x) int x; cin >> x
 #define sdouble(x) double x; cin >> x
 #define slong(x) ll x; cin >> x
 #define sstring(x) string x; cin >> x
-template <class T> void sarray(T& v, int n) { rep(i, 0, n) { cin >> v[i]; } }
+template <class T> void sarray(T& v, int n) { v.resize(n); rep(i, 0, n) { cin >> v[i]; } }
 template <class T> void sgrid(T& v, int r, int c) { rep(i, 0, r) rep(j, 0, c) { cin >> v[i][j]; } }
 
 template <class T> void chmin(T &a, T b) { if (b < a) a = b; }
