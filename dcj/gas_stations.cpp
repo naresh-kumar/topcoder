@@ -85,50 +85,105 @@ class Node {
 // can not exceed 8MB.
 
 /*************************** Code starts here *********************************/
+#include "gas_stations.h"
 
-#include "lisp_plus_plus.h"
+int small() {
+  int nnodes = NumberOfNodes();
+  Node node(0, MyNodeId(), nnodes);
+  if (node.id > 0) return 0;
+  ll tank_size = GetTankSize();
+  ll dist = GetNumKms();
+  deque<pair<ll, ll>> prices;
+  ll cost = 0;
+  rep(i, 0, dist) {
+    ll p = GetGasPrice(i);
+    while (not prices.empty() && prices.back().second > p) {
+      prices.pop_back();
+    }
+    prices.push_back({i, p});
+    if (prices.front().first <= i - tank_size) {
+      prices.pop_front();
+    }
+    cost += prices.front().second;
+  }
+  cout << cost << endl;
+  return 0;
+}
+
+ll k = 5 * 1000000;
+ll dist = GetNumKms();
+ll P(ll i) {
+  return i < dist ? GetGasPrice(i) : 0;
+}
+
 int main() {
   int nnodes = NumberOfNodes();
-  int n = GetLength();
+  ll n = dist;
+  while (n % k != 0) ++n;
+  nnodes = n/k;
   Node node(n, MyNodeId(), nnodes);
-  ll mcount = INT_MAX;
-  ll count = 0;
-  rep(i, node.begin, node.end) {
-    if (GetCharacter(i) == '(') ++count;
-    else --count;
-    chmin(mcount, count);
+  if (node.id >= nnodes) return 0;
+
+  ll min_index = -1;
+  ll min_value = INT_MAX;
+  ll r = min((ll)node.end, dist);
+  rep(i, node.begin, r) {
+    ll price = P(i);
+    if (price <= min_value) {
+      min_value = price;
+      min_index = i;
+    }
   }
-  Writer(0).LL(count).LL(mcount).Done();
+  rep(i, 0, nnodes) {
+    Writer(i).LL(min_index).LL(min_value).Done();
+  }
+  vector<pair<ll, ll>> min_prices(nnodes);
+  rep(i, 0, nnodes) {
+    Reader reader(i);
+    min_prices[i].first = reader.LL();
+    min_prices[i].second = reader.LL();
+  }
+  ll tank_size = GetTankSize();
+  deque<pair<ll, ll>> prices;
+  ll s_index = max((ll)0, node.begin - tank_size + 1);
+  ll e_index = min((ll)node.begin, s_index + k);
+  rep (i, s_index, e_index) {
+    ll p = P(i);
+    while (not prices.empty() && prices.back().second >= p) {
+      prices.pop_back();
+    }
+    prices.push_back({i, p});
+  }
+  rep(i, 0, nnodes) {
+    ll index = min_prices[i].first;
+    ll p = min_prices[i].second;
+    if (i < node.id && index > prices.back().first) {
+      while (not prices.empty() && prices.back().second >= p) {
+        prices.pop_back();
+      }
+      prices.push_back({index, p});
+    }
+  }
+  ll cost = 0;
+  rep(i, node.begin, r) {
+    ll p = P(i);
+    while (not prices.empty() && prices.back().second >= p) {
+      prices.pop_back();
+    }
+    prices.push_back({i, p});
+    if (prices.front().first <= i - tank_size) {
+      prices.pop_front();
+    }
+    cost += prices.front().second;
+  }
+  Writer(0).LL(cost).Done();
   if (node.is_first) {
-    vector<pair<ll, ll>> arr;
-    rep (i, 0, nnodes) {
-      Reader r(i);
-      ll c = r.LL();
-      ll mc = r.LL();
-      arr.push_back({c, mc});
-    }
-    ll seg = -1;
-    ll count = 0;
+    ll cost = 0;
     rep(i, 0, nnodes) {
-      if (count + arr[i].second < 0) {
-        seg = i;
-        break;
-      }
-      count += arr[i].first;
+      Reader reader(i);
+      cost += reader.LL();
     }
-    if (seg == -1 ) {
-      cout << (count == 0 ? -1 : n) << endl;
-    } else {
-      Node node(n, seg, nnodes);
-      rep (i, node.begin, node.end) {
-        if (GetCharacter(i) == '(') ++count;
-        else --count;
-        if (count < 0) {
-          cout << i << endl;
-          return 0;
-        }
-      }
-    }
+    cout << cost << endl;
   }
   return 0;
 }

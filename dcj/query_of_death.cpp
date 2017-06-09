@@ -67,7 +67,7 @@ class Reader {
 
 class Node {
  public:
-  Node(ll range, int currid, int nnodes) {
+  Node(ll range, ll currid, ll nnodes) {
     id = currid;
     begin = range * id / nnodes;
     end = range * (id + 1) / nnodes;
@@ -77,7 +77,7 @@ class Node {
     next = (id + 1) % nnodes;
     previous = (id + nnodes - 1) % nnodes;
   }
-  int id, begin, end, size, previous, next, is_first, is_last;
+  ll id, begin, end, size, previous, next, is_first, is_last;
 };
 
 // default limits
@@ -86,49 +86,62 @@ class Node {
 
 /*************************** Code starts here *********************************/
 
-#include "lisp_plus_plus.h"
+#include "query_of_death.h"
+
 int main() {
   int nnodes = NumberOfNodes();
-  int n = GetLength();
-  Node node(n, MyNodeId(), nnodes);
-  ll mcount = INT_MAX;
-  ll count = 0;
-  rep(i, node.begin, node.end) {
-    if (GetCharacter(i) == '(') ++count;
-    else --count;
-    chmin(mcount, count);
-  }
-  Writer(0).LL(count).LL(mcount).Done();
-  if (node.is_first) {
-    vector<pair<ll, ll>> arr;
-    rep (i, 0, nnodes) {
-      Reader r(i);
-      ll c = r.LL();
-      ll mc = r.LL();
-      arr.push_back({c, mc});
-    }
-    ll seg = -1;
-    ll count = 0;
-    rep(i, 0, nnodes) {
-      if (count + arr[i].second < 0) {
-        seg = i;
-        break;
+  if (MyNodeId() == 0) {
+    ll n = GetLength();
+    set<int> nodes;
+    rep(i, 1, nnodes) nodes.insert(i);
+    ll offset = 0;
+    ll sum = 0;
+    while (n > 1) {
+      int i = 0;
+      for (auto node_id : nodes) {
+        Node node(n, i, nodes.size());
+        Writer(node_id).LL(offset + node.begin).LL(offset + node.end).Done();
+        ++i;
       }
-      count += arr[i].first;
+      ll broken = -1;
+      for (auto node_id : nodes) {
+        Reader reader(node_id);
+        ll v = reader.LL();
+        ll from = reader.LL();
+        ll to = reader.LL();
+        if (v == -1) {
+          broken = node_id;
+          offset = from;
+          n = to - from;
+        }
+        else sum += v;
+      }
+      nodes.erase(broken);
     }
-    if (seg == -1 ) {
-      cout << (count == 0 ? -1 : n) << endl;
-    } else {
-      Node node(n, seg, nnodes);
-      rep (i, node.begin, node.end) {
-        if (GetCharacter(i) == '(') ++count;
-        else --count;
-        if (count < 0) {
-          cout << i << endl;
-          return 0;
+    rep (i, 1, nnodes) {
+      Writer(i).LL(-1).LL(-1).Done();
+    }
+    cout << sum + GetValue(offset) << endl;
+    return 0;
+  }
+  while (true) {
+    Reader reader(0);
+    ll from = reader.LL();
+    ll to = reader.LL();
+    if (from == -1) break;
+    ll sum = 0;
+    rep(i, from, to) { sum += GetValue(i); }
+    bool isbroken = false;
+    if (from != to) {
+      ll v = GetValue(from);
+      rep(i, 0, 100) {
+        if (GetValue(from) != v) {
+          isbroken = true;
+          break;
         }
       }
     }
+    Writer(0).LL(isbroken ? -1 : sum).LL(from).LL(to).Done();
   }
   return 0;
 }

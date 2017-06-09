@@ -67,7 +67,7 @@ class Reader {
 
 class Node {
  public:
-  Node(ll range, int currid, int nnodes) {
+  Node(ll range, ll currid, ll nnodes) {
     id = currid;
     begin = range * id / nnodes;
     end = range * (id + 1) / nnodes;
@@ -77,7 +77,7 @@ class Node {
     next = (id + 1) % nnodes;
     previous = (id + nnodes - 1) % nnodes;
   }
-  int id, begin, end, size, previous, next, is_first, is_last;
+  ll id, begin, end, size, previous, next, is_first, is_last;
 };
 
 // default limits
@@ -86,49 +86,95 @@ class Node {
 
 /*************************** Code starts here *********************************/
 
-#include "lisp_plus_plus.h"
+#include "todd_and_steven.h"
+ll MOD =  1000000007;
+ll tlength = GetToddLength();
+ll slength = GetStevenLength();
+
+ll bsearchtodd(ll v) {
+  ll s = 0;
+  ll e = tlength;
+  ll m = (s + e) / 2;
+  while (s < e) {
+    ll curr = GetToddValue(m);
+    if (curr < v) {
+      s = m+1;
+    } else {
+      e = m;
+    }
+    m = (s + e) / 2;
+  }
+  return m;
+}
+
+ll bsearchsteven(ll v) {
+  ll s = 0;
+  ll e = slength;
+  ll m = (s + e) / 2;
+  while (s < e) {
+    ll curr = GetStevenValue(m);
+    if (curr < v) {
+      s = m+1;
+    } else {
+      e = m;
+    }
+    m = (s + e) / 2;
+  }
+  return m;
+}
+
 int main() {
   int nnodes = NumberOfNodes();
-  int n = GetLength();
-  Node node(n, MyNodeId(), nnodes);
-  ll mcount = INT_MAX;
-  ll count = 0;
-  rep(i, node.begin, node.end) {
-    if (GetCharacter(i) == '(') ++count;
-    else --count;
-    chmin(mcount, count);
-  }
-  Writer(0).LL(count).LL(mcount).Done();
-  if (node.is_first) {
-    vector<pair<ll, ll>> arr;
-    rep (i, 0, nnodes) {
-      Reader r(i);
-      ll c = r.LL();
-      ll mc = r.LL();
-      arr.push_back({c, mc});
-    }
-    ll seg = -1;
-    ll count = 0;
-    rep(i, 0, nnodes) {
-      if (count + arr[i].second < 0) {
-        seg = i;
-        break;
-      }
-      count += arr[i].first;
-    }
-    if (seg == -1 ) {
-      cout << (count == 0 ? -1 : n) << endl;
+  Node nodet(tlength, MyNodeId(), nnodes);
+  Node nodes(slength, MyNodeId(), nnodes);
+  ll ans = 0;
+  ll j = -1;
+  rep(i, nodet.begin, nodet.end) {
+    ll curr = GetToddValue(i);
+    if (j == -1) {
+      j = bsearchsteven(curr);
     } else {
-      Node node(n, seg, nnodes);
-      rep (i, node.begin, node.end) {
-        if (GetCharacter(i) == '(') ++count;
-        else --count;
-        if (count < 0) {
-          cout << i << endl;
-          return 0;
-        }
+      int limit = 10;
+      while (j < slength && GetStevenValue(j) < curr && limit) {
+        ++j;
+        --limit;
+      }
+      if (not limit) {
+        j = bsearchsteven(curr);
       }
     }
+    ans += (i + j) ^ curr;
+    ans = ans % MOD;
+  }
+
+  j = -1;
+  rep(i, nodes.begin, nodes.end) {
+    ll curr = GetStevenValue(i);
+    if (j == -1) {
+      j = bsearchtodd(curr);
+    } else {
+      int limit = 10;
+      while (j < tlength && GetToddValue(j) < curr && limit) {
+        ++j;
+        --limit;
+      }
+      if (not limit) {
+        j = bsearchtodd(curr);
+      }
+    }
+    ans += (i + j) ^ curr;
+    ans = ans % MOD;
+  }
+
+  Writer(0).LL(ans).Done();
+  if (nodet.is_first) {
+    ll ans = 0;
+    rep(i, 0, nnodes) {
+      Reader reader(i);
+      ans += reader.LL();
+      ans = ans % MOD;
+    }
+    cout << ans << endl;
   }
   return 0;
 }

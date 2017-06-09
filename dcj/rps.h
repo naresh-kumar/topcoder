@@ -1,21 +1,17 @@
-// Sample input 1, in CPP.
+// Sample input 3, in CPP.
 
 #include <cassert>
 
 long long GetN() {
-  return 13LL;
+  return 2LL;
 }
 
 char GetFavoriteMove(long long id) {
   switch ((int)id) {
-    case 0: return 'R';
-    case 1: return 'P';
-    case 2: return 'S';
-    case 3: return 'R';
-    case 4: return 'P';
-    case 5: return 'S';
-    case 6: return 'R';
-    case 7: return 'P';
-    default: return 'P';
+    case 0: return 'S';
+    case 1: return 'R';
+    case 2: return 'P';
+    case 3: return 'P';
+    default: assert(0);
   }
 }

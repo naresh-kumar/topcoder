@@ -1,7 +1,7 @@
 // Author: Naresh
 #include <algorithm>
 #include <bitset>
-#include <cassert>
+#include <climits>
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
@@ -13,148 +13,156 @@
 #include <memory>
 #include <numeric>
 #include <queue>
-#include <random>
 #include <set>
-#include <sstream>
 #include <stack>
 #include <unordered_map>
-#include <limits.h>
+#include <unordered_set>
 #include <vector>
 #include "message.h"
-#include "asteroids.h"
 
 using namespace std;
+typedef int64_t ll;
+typedef __int128 bigint;
 
-#define all(a) a.begin(),a.end()
-#define rep(i, a, b) for(int i=(a); i<(b); ++i)
-#define irep(i, a, b) for(int i=(a); i>=(b); --i)
-#define iter(i,v) for(auto &i : (v))
+#define all(a) a.begin(), a.end()
+#define rep(i, a, b) for (ll i = (a); i < (b); ++i)
+#define irep(i, a, b) for (ll i = (a); i >= (b); --i)
 
-typedef long long ll;
+// Stream operators for std::pair
+template<class F, class S> ostream& operator<<(ostream& os, const pair<F,S>& p) { return os << p.first << ":" << p.second; }
 
-typedef vector<int> vi;
-typedef vector<ll> vll;
-typedef vector<double> vd;
-typedef vector<string> vs;
+// Debug write to stderr
+template <class T> void print(T& v, string s = "\n") { cerr << v << s; }
+template <class T> void printlist(T& l, int n) { rep(i,0,n) print(l[i], " "); print(""); }
+template <class T> void printgrid(T& g, int n, int m) { rep(i,0,n) { printlist(g[i], m); } }
+template <class T> void printmap(T& m) { for(auto& i : m) { print(i, " "); } print(""); }
 
-typedef pair<int, int> pii;
-typedef pair<int, string> pis;
-typedef pair<string, int> psi;
-typedef pair<string, string> pss;
+template <class T> void chmin(T &a, T b) { if (b < a) a = b; }
+template <class T> void chmax(T &a, T b) { if (b > a) a = b; }
 
-typedef map<int, int> mii;
-typedef map<int, string> mis;
-typedef map<string, int> msi;
-typedef map<string, string> mss;
+class Writer {
+ public:
+  Writer(int to) : to(to) {}
+  Writer& Char(char v) { PutChar(to, v); return *this; }
+  Writer& Int(int v) { PutInt(to, v); return *this; }
+  Writer& LL(ll v) { PutLL(to, v); return *this; }
+  Writer& String(string& s) { PutInt(to, s.size()); for (auto c : s) PutChar(to, c); return *this; }
+  Writer& IntVector(vector<int>& l) { PutInt(to, l.size()); for (auto v : l) PutInt(to, v); return *this; }
+  Writer& LLVector(vector<ll>& l) { PutInt(to, l.size()); for (auto v : l) PutLL(to, v); return *this; }
+  void Done() { Send(to); }
+  int to;
+};
 
-// read
-#define gc getchar_unlocked
-template<class T> inline T readnum() { int i=gc(),f=1; for(;i<'0'||i>'9';i=gc()) if(i=='-') { f=-1;i=gc();break; } T ret = 0; for(;i>='0'&&i<='9';i=gc()) { ret = ret*10 + (i-'0'); } return f*ret; }
-inline int si() { return readnum<int>(); }
-inline ll sll() { return readnum<ll>(); }
-inline string ss() { static char buf[100000]; if(scanf("%s",buf)!=1) return ""; return buf; }
-inline void svector(vector<int>& v, int n) { v.reserve(n); rep(i,0,n) v.push_back(si()); }
-inline void sarray(int* v, int n) { rep(i,0,n) v[i] = si(); }
+class Reader {
+ public:
+  Reader(int from) : from(from) { Receive(from);}
+  char Char() { return GetChar(from); }
+  int Int() { return GetInt(from); }
+  ll LL() { return GetLL(from); }
+  void String(string& s) { int n = GetInt(from); s.resize(n); rep(i, 0, n) s[i] = GetChar(from); }
+  void IntVector(vector<int>& v) { int n = GetInt(from); v.resize(n); rep(i, 0, n) v[i] = GetInt(from); }
+  void LLVector(vector<ll>& v) { int n = GetInt(from); rep(i, 0, n) v[i] = GetLL(from); }
+  int from;
+};
 
-// debug write
-template<class T> inline void println(T t, string msg = "") { cerr <<  msg << " " << t << endl; }
-template<class T> inline void prints(T t, string s = " ") { cerr << t << s; }
-template<class T> inline void printlist(T l) { iter(i,l) prints(i); cerr << endl; }
-template<class T> inline void printlist(T *l, int n) { rep(i,0,n) prints(*(l+i)); cerr << endl; }
-template<class T> inline void printmap(T m) { iter(i,m) { prints(i.first); prints(i.second); } cerr << endl; }
-
-// general utils
-template<class T> inline void setmax(T &a, T b) { if(b > a) a = b; }
-template<class T> inline void setmin(T &a, T b) { if(b < a) a = b; }
-template<class T> inline bool isInGrid(T i, T j, T n) { return i>=0 && i<n && j>=0 && j<n; }
-template<class T> inline bool isInside(T a, T b, T c) { return a > b && a < c; }
-template<class T> inline T reverse(T n) { T r = 0; while (n != 0) { r = r*10; r = r+n%10; n = n/10; } return r; }
-template<class T> inline int firstdigit(T n) { int r = 0; while (n != 0) { r = n%10; n = n/10; } return r; }
-template<class T> inline int digits(T n) { int r = 0; while (n != 0) { ++r; n /= 10; } return r; }
-inline int frequency(string& s, char c) { int r = 0; rep(i,0,s.length()) if (s[i] == c) ++r; return r; }
-
-// math utils
-extern int MOD;
-// multiply add mod
-template<class T> inline T mam(T a, T b, T c) { return ((a*b) % MOD + c) % MOD; }
-ll factorial(int x) { return (x < 2) ? 1 : x*factorial(x-1); }
-ll ncr(int n, int r) { return factorial(n)/(factorial(r) * factorial(n-r)); }
-inline ll ipow(ll a, ll b, ll c = MOD) { ll r = 1; while(b) { if(b & 1) r = r*a % MOD; a = a*a % MOD; b >>= 1; } return r; }
-inline ll inver(ll a,ll c = MOD) { ll ans = ipow(a,MOD-2); return ans; }
-ll gcd(ll a, ll b) { return b == 0 ? a : gcd(b, a%b); }
-inline bool almost_equal(double x, double y, int ulp) { return std::abs(x-y) < std::numeric_limits<double>::epsilon() * std::abs(x+y) * ulp || std::abs(x-y) < std::numeric_limits<double>::min(); }
-
-// constants
-const double PI = 3.14159265358979323846;
-const int MAX_INT = (1LL << 31) - 1;
-const int MIN_INT = (1LL << 31);
-int MOD = 1E+7 + 7;
-
-bool IsFirst() { return MyNodeId() == 0; }
-bool IsLast() { return MyNodeId() == NumberOfNodes() - 1; }
-pii NodeRange(ll n) {
-  int start = n * MyNodeId() / NumberOfNodes();
-  int end = n * (MyNodeId() + 1) / NumberOfNodes();
-  return {start, end};
-}
-
-int n,m;
-int game[1000][1000];
-ll dp[1000][1000];
-
-ll val(int i, int j) {
-  if (i >= 0 && i < n && j >= 0 && j < m) {
-    return game[i][j];
+class Node {
+ public:
+  Node(ll range, int currid, int nnodes) {
+    id = currid;
+    start = range * id / nnodes;
+    end = range * (id + 1) / nnodes;
+    size = end - start;
+    is_first = id == 0;
+    is_last = id == nnodes - 1;
+    next = (id + 1) % nnodes;
+    previous = (id + nnodes - 1) % nnodes;
   }
-  return MIN_INT;
+  int id, start, end, size, previous, next, is_first, is_last;
+};
+
+// default limits
+// Each node can send at most 1000 messages and total size of all messages
+// can not exceed 8MB.
+
+/*************************** Code starts here *********************************/
+
+#include "asteroids.h"
+
+ll width = GetWidth();
+ll height = GetHeight();
+
+inline ll score(ll i, ll j) {
+  if (j >= width) return INT_MIN;
+  char c = GetPosition(i, j);
+  return c == '#' ? INT_MIN : c - '0';
 }
 
-ll vald(int i, int j) {
-  if (i >= 0 && i < n && j >= 0 && j < m) {
-    return dp[i][j];
-  }
-  return MIN_INT;
-}
-
+ll k = 300;
 int main() {
-  if (IsFirst()) {
-    n = GetHeight();
-    m = GetWidth();
-    rep (i, 0, n) rep (j, 0, m) {
-      char c = GetPosition(i, j);
-      if (c == '#') game[i][j] = MIN_INT;
-      else game[i][j] = c - '0';
-    }
-    rep(i, 0, m) {
-      dp[0][i] = game[0][i];
-    }
-    rep(i, 1, n) rep (j, 0, m) {
-      if (game[i][j] >= 0) {
-        ll ans = game[i][j] + vald(i-1, j);
-        ans = max(ans, vald(i-1,j-1) + val(i-1,j) + game[i][j]);
-        ans = max(ans, vald(i-1,j+1) + val(i-1,j) + game[i][j]);
-        dp[i][j] = ans;
-      } else {
-        dp[i][j] = game[i][j];
+  ll nnodes = NumberOfNodes();
+  ll n = width;
+  while(n % k != 0) ++n;
+  nnodes = n / k;
+  Node node(n, MyNodeId(), nnodes);
+  if (node.id >= nnodes) return 0;
+  assert(node.size == k);
+  ll l = max(node.start - k, (ll)0);
+  ll r = min(node.end + k, n);
+  ll segment = r - l;
+  vector<vector<ll>> dp(2, vector<ll>(segment, 0));
+  int from = 0;
+  int to = 1;
+  vector<ll> val(segment, 0);
+  for (ll row = 0; row < height; ++row) {
+    if (row % k == 0 && row > 0) {
+      if (not node.is_first) {
+        Reader reader(node.previous);
+        rep(i, 0, k) dp[from][i] = reader.LL();
+      }
+      if (not node.is_last) {
+        Reader reader(node.next);
+        rep(i, 0, k) dp[from][k + i + node.start - l] = reader.LL();
       }
     }
-//    irep (i, n-1, 0) {
-//      printlist(game[i], m);
-//    }
-//    irep (i, n-1, 0) {
-//      printlist(dp[i], m);
-//    }
-    ll ans = MIN_INT;
-    rep (j, 0, m) {
-      ans = max(ans, dp[n-1][j]);
-      ans = max(ans, dp[n-1][j] + val(n-1, j-1));
-      ans = max(ans, dp[n-1][j] + val(n-1, j+1));
+    rep (i, 0, segment) {
+      val[i] = score(row, i + l);
     }
-    if (ans < 0) {
-      ans = -1;
+    for (ll j = 0; j < segment; ++j) {
+      ll ans = dp[from][j] + val[j];
+      if (j > 0) {
+        chmax(ans, dp[from][j - 1] + val[j] + val[j-1]);
+      }
+      if (j + 1 < segment) {
+        chmax(ans, dp[from][j + 1] + val[j] + val[j+1]);
+      }
+      dp[to][j] = ans;
     }
+    if (row % k == k - 1 && row != height - 1) {
+      if (not node.is_first) {
+        Writer writer(node.previous);
+        rep(i, 0, k) writer.LL(dp[to][i + node.start - l]);
+        writer.Done();
+      }
+      if (not node.is_last) {
+        Writer writer(node.next);
+        rep(i, 0, k) writer.LL(dp[to][i + node.start - l]);
+        writer.Done();
+      }
+    }
+    from = not from;
+    to = not to;
+  }
+  ll ans = INT_MIN;
+  rep(i, 0, k) chmax(ans, dp[from][i + node.start - l]);
+  Writer(0).LL(ans).Done();
+  if (node.is_first) {
+    ll ans = INT_MIN;
+    rep(i, 0, nnodes) {
+      Reader reader(i);
+      chmax(ans, reader.LL());
+    }
+    if (ans < 0) ans = -1;
     cout << ans << endl;
   }
   return 0;
 }
-
