@@ -87,7 +87,10 @@ class Node {
 /*************************** Code starts here *********************************/
 
 int main() {
-  int nnodes = NumberOfNodes();
+  ll nnodes = NumberOfNodes();
+  ll n = 0;
+  chmin(nnodes, n);
   Node node(n, MyNodeId(), nnodes);
+  if (node.id > nnodes) return 0;
   return 0;
 }
